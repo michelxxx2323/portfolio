@@ -339,9 +339,30 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 
-/* Página própria do case: a seção abre a página, sem a régua de cima */
-#creators{border-top:0;padding-top:clamp(32px,6vw,64px)}
+/* Página própria do case */
 .back{display:inline-block;margin-top:clamp(24px,4vw,40px)}
+.case-hero{padding-block:clamp(28px,5vw,56px) clamp(48px,7vw,80px)}
+.case-hero h1{font-size:clamp(3rem,9vw,7rem);margin-top:18px}
+.case-hero .lede{font-family:var(--f-serif);font-style:italic;font-size:clamp(1.4rem,2.8vw,2rem);line-height:1.2;margin-top:22px;max-width:40ch}
+.intro-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr);gap:clamp(24px,5vw,56px);margin-top:clamp(28px,4vw,44px);align-items:start}
+.prose{display:grid;gap:14px;max-width:64ch}
+.prose h3{font:500 .74rem/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.status{display:grid;gap:10px}
+.status div{background:var(--sunk);border-radius:var(--r);padding:14px 16px;display:grid;gap:6px}
+.status b{font:500 .7rem/1.2 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink)}
+.status span{font-size:.92rem}
+@media (max-width:860px){.intro-grid{grid-template-columns:1fr}}
+.steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(20px,3vw,30px);display:grid;gap:14px;align-content:start}
+.step h3{font-family:var(--f-display);font-weight:800;font-stretch:108%;text-transform:uppercase;font-size:clamp(1.4rem,3vw,2rem);line-height:1}
+.step p{color:var(--muted)}
+.step ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.step li{position:relative;padding-left:18px;font-size:.95rem}
+.step li::before{content:"";position:absolute;left:0;top:.7em;width:8px;height:1px;background:var(--accent)}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.checks{margin:0;padding:0;list-style:none;display:grid;gap:8px;max-width:72ch}
+.checks li{position:relative;padding-left:18px;font-size:.95rem;color:var(--muted)}
+.checks li::before{content:"";position:absolute;left:0;top:.7em;width:8px;height:1px;background:var(--accent)}
 </style>
 </head>
 <body>
@@ -364,13 +385,86 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
 <main class="wrap" id="top">
   <a class="jump back" href="index.html#ia" data-en="← Back to the portfolio">← Voltar ao portfólio</a>
 
-  <!-- CREATOR SUPPLY ENGINE -->
-  <section id="creators">
+  <!-- ABERTURA -->
+  <header class="case-hero">
+    <span class="eyebrow" data-en="Case · Oct 2026">Case · Out 2026</span>
+    <h1 class="display">Creator<br>Supply Engine</h1>
+    <p class="lede" data-en="An independent case for Passionfroot’s Creator Acquisition Analyst role: the first two weeks on the job, simulated with real data from the Brazilian market.">Um case independente para a vaga de Creator Acquisition Analyst da Passionfroot: as duas primeiras semanas no cargo, simuladas com dados reais do mercado brasileiro.</p>
+    <div class="intro-grid">
+      <div class="prose">
+        <h3 data-en="In 30 seconds">Em 30 segundos</h3>
+        <p data-en="&lt;b&gt;Passionfroot&lt;/b&gt; is a platform where B2B brands book sponsorships with creators: people who publish content for professionals on YouTube, LinkedIn and newsletters. The &lt;b&gt;Creator Acquisition Analyst&lt;/b&gt; brings creators onto the platform: finds them, checks whether they fit each campaign, and gets them ready for brands.">A <b>Passionfroot</b> é uma plataforma onde marcas B2B contratam publis com creators: pessoas que publicam conteúdo para profissionais no YouTube, LinkedIn e em newsletters. O <b>Creator Acquisition Analyst</b> traz esses creators para a plataforma: encontra, avalia se servem para cada campanha e prepara cada um para as marcas.</p>
+        <a class="jump" href="https://www.passionfroot.me/careers/creator-acquisition-analyst-01437b8d" target="_blank" rel="noopener" data-en="The job posting: Creator Acquisition Analyst ↗">A vaga: Creator Acquisition Analyst ↗</a>
+      </div>
+      <aside class="status">
+        <div><b data-en="Stage 1 · Done">Etapa 1 · Concluída</b><span data-en="A campaign request from ElevenLabs, answered with a 15-creator shortlist.">Um pedido de campanha da ElevenLabs, respondido com uma shortlist de 15 creators.</span></div>
+        <div><b data-en="Stage 2 · In progress">Etapa 2 · Em construção</b><span data-en="The automated flow and a weekly creator pipeline. Due in November 2026.">O fluxo automático e um pipeline semanal de creators. Previsão: novembro de 2026.</span></div>
+      </aside>
+    </div>
+  </header>
+
+  <!-- DUAS ETAPAS -->
+  <section id="etapas">
+    <div class="sec-head">
+      <span class="eyebrow" data-en="How the case works">Como o case funciona</span>
+      <h2 class="display" data-en="Two stages">Duas etapas</h2>
+      <p class="serif" data-en="The role has two fronts: answering campaign requests the same day, and keeping a pipeline of creators full. The case simulates one of each.">O trabalho dessa vaga tem duas frentes: responder pedidos de campanha no mesmo dia e manter um pipeline de creators sempre abastecido. O case simula uma de cada.</p>
+    </div>
+    <div class="steps">
+      <article class="step">
+        <span class="state use" data-en="Stage 1 · Done">Etapa 1 · Concluída</span>
+        <h3 data-en="A campaign request">Um pedido de campanha</h3>
+        <p data-en="I pretended that ElevenLabs, an AI voice company, published a campaign on Passionfroot, and a campaign manager asked me for Brazilian creators. I wrote the brief the way ElevenLabs’ marketing team would (product, audience, pitch, creative guidelines and budget) and answered it with a shortlist.">Simulei que a ElevenLabs, empresa de IA de voz, publicou uma campanha na Passionfroot e que um campaign manager me pediu creators brasileiros. Escrevi o brief como o time de marketing da ElevenLabs escreveria (produto, público, pitch, guidelines e budget) e respondi com uma shortlist.</p>
+        <ul>
+          <li data-en="263 YouTube channels found and checked">263 canais do YouTube encontrados e verificados</li>
+          <li data-en="Each channel vetted by two AI models, with my call on split verdicts">Cada canal avaliado por duas IAs, com a minha decisão nos empates</li>
+          <li data-en="15 creators, each with a reason and a price; US$&amp;nbsp;13.6K budget">15 creators, cada um com motivo e preço; budget de US$&nbsp;13,6 mil</li>
+        </ul>
+        <a class="jump" href="#etapa1" data-en="See stage 1 ↓">Ver a etapa 1 ↓</a>
+      </article>
+      <article class="step">
+        <span class="state build" data-en="Stage 2 · In progress">Etapa 2 · Em construção</span>
+        <h3 data-en="The automated flow">O fluxo automático</h3>
+        <p data-en="Turning that manual work into a system that runs every week. A free-text brief arrives on Slack or a form, Claude turns it into criteria, the system searches the map of already-vetted creators and returns a shortlist for me to approve. Alongside it, a weekly pipeline brings new creators from LinkedIn, YouTube and newsletters into the niches where supply is thin, all logged in the CRM.">Transformar esse trabalho manual num sistema que roda toda semana. Um brief em texto livre chega pelo Slack ou por um formulário, o Claude transforma em critérios, o sistema busca no mapa de creators já avaliados e devolve uma shortlist para eu aprovar. Em paralelo, um pipeline semanal traz creators novos de LinkedIn, YouTube e newsletters para os nichos onde falta oferta, com tudo registrado no CRM.</p>
+        <ul>
+          <li data-en="Brief to approved shortlist, measured in minutes">Do brief à shortlist aprovada, medido em minutos</li>
+          <li data-en="n8n + Claude, with human approval at the end">n8n + Claude, com aprovação humana no fim</li>
+          <li data-en="Attio as the CRM, with a reason for every rejection">Attio como CRM, com motivo para cada rejeição</li>
+        </ul>
+        <a class="jump" href="#etapa2" data-en="See stage 2 ↓">Ver a etapa 2 ↓</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- VAGA x CASE -->
+  <section id="vaga">
+    <div class="sec-head">
+      <span class="eyebrow" data-en="Why this format">Por que esse formato</span>
+      <h2 class="display" data-en="What the role asks">O que a vaga pede</h2>
+      <p class="serif" data-en="Each item in the job description has a part of the case that shows how I would do it.">Cada item da descrição da vaga tem uma parte do case que mostra, na prática, como eu faria.</p>
+    </div>
+    <div class="sl-wrap">
+      <table class="sl">
+        <thead><tr><th data-en="The role asks">A vaga pede</th><th data-en="The case shows">O case mostra</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td data-en="Vet creators against a brief">Avaliar creators contra um brief</td><td data-en="A six-criteria rubric scored by two AI models, with my call on split verdicts">Rubrica de seis critérios, avaliada por duas IAs e com a minha decisão nos empates</td><td data-en="Done">Feito</td></tr>
+          <tr><td data-en="Same-day shortlists for campaign managers">Shortlist no mesmo dia para os campaign managers</td><td data-en="A 15-creator shortlist for the ElevenLabs brief, with reasons and prices">Shortlist de 15 creators para o brief da ElevenLabs, com motivo e preço</td><td data-en="Done; automated in stage 2">Feito; automação na etapa 2</td></tr>
+          <tr><td data-en="Build lists in Clay and Apollo, track every creator in Attio">Montar listas no Clay e Apollo e registrar tudo no Attio</td><td data-en="Automated YouTube sourcing; LinkedIn via Clay and the Attio pipeline in stage 2">Sourcing automatizado no YouTube; LinkedIn pelo Clay e pipeline no Attio na etapa 2</td><td data-en="In progress">Em andamento</td></tr>
+          <tr><td data-en="Build automations with n8n and Claude">Automações com n8n e Claude</td><td data-en="Scripts that rerun every batch; an n8n flow from brief to shortlist">Scripts que rodam cada lote; fluxo n8n do brief à shortlist</td><td data-en="In progress">Em andamento</td></tr>
+          <tr><td data-en="Report on supply and gaps">Reportar supply e gaps</td><td data-en="Where Brazilian B2B supply is thin, by niche and platform">Onde falta supply B2B no Brasil, por nicho e plataforma</td><td data-en="Partial">Parcial</td></tr>
+          <tr><td data-en="15-minute onboarding calls">Calls de onboarding de 15 minutos</td><td data-en="A call script and conversations with 5 to 8 creators">Roteiro de call e conversas com 5 a 8 creators</td><td data-en="Planned">Planejado</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ETAPA 1 -->
+  <section id="etapa1">
     <div class="case-top">
       <div class="sec-head">
-        <span class="eyebrow" data-en="Case · Oct 2026">Case · Out 2026</span>
-        <h2 class="display">Creator<br>Supply Engine</h2>
-        <p class="serif" data-en="A system that finds, vets and prices Brazilian B2B creators. An independent case built for Passionfroot’s Creator Acquisition role.">Um sistema que encontra, avalia e precifica creators B2B brasileiros. Case independente, feito para a vaga de Creator Acquisition da Passionfroot.</p>
+        <span class="eyebrow" data-en="Stage 1 · Campaign request">Etapa 1 · Pedido de campanha</span>
+        <h2 class="display" data-en="From brief&lt;br&gt;to shortlist">Do brief<br>à shortlist</h2>
+        <p class="serif" data-en="How 263 channels became 15 creators with a price.">Como 263 canais viraram 15 creators com preço.</p>
       </div>
       <div class="facts">
         <div class="fact"><b>263</b><span data-en="YouTube channels analyzed">canais do YouTube analisados</span></div>
@@ -381,10 +475,10 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
     </div>
 
     <div class="tabs" role="tablist" aria-label="Partes do case de creators" data-en-label="Creator case sections">
-      <button role="tab" id="t-cs-sys" aria-controls="p-cs-sys" aria-selected="true" data-en="System">Sistema</button>
+      <button role="tab" id="t-cs-brief" aria-controls="p-cs-brief" aria-selected="true" data-en="The ElevenAgents brief">O brief da ElevenAgents</button>
+      <button role="tab" id="t-cs-sys" aria-controls="p-cs-sys" aria-selected="false" data-en="System">Sistema</button>
       <button role="tab" id="t-cs-vet" aria-controls="p-cs-vet" aria-selected="false" data-en="Double vetting">Duplo vetting</button>
       <button role="tab" id="t-cs-gr" aria-controls="p-cs-gr" aria-selected="false">Guardrail</button>
-      <button role="tab" id="t-cs-brief" aria-controls="p-cs-brief" aria-selected="false" data-en="ElevenAgents brief">Brief ElevenAgents</button>
       <button role="tab" id="t-cs-sl" aria-controls="p-cs-sl" aria-selected="false">Shortlist</button>
       <button role="tab" id="t-cs-gap" aria-controls="p-cs-gap" aria-selected="false" data-en="What the data shows">O que os dados mostram</button>
     </div>
@@ -478,8 +572,47 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
         <div class="card"><b data-en="The noise">O ruído</b><p data-en="Much of Brazilian AI content on YouTube sells “make money online”: dark channels, TikTok Shop, AI influencers. It's big, but it isn't B2B supply.">Boa parte do conteúdo de IA no YouTube brasileiro vende “renda online”: canal dark, TikTok Shop, influencer de IA. É grande, mas não é supply B2B.</p></div>
         <div class="card"><b data-en="The opening">A oportunidade</b><p data-en="None of the creators featured on Passionfroot's For Creators page is Brazilian. The automation and agent niche on WhatsApp is the obvious place to start.">Nenhum creator em destaque na página For Creators da Passionfroot é brasileiro. O nicho de automação e agentes no WhatsApp é o ponto de partida óbvio.</p></div>
       </div>
-      <p data-en="Next: LinkedIn and newsletter sourcing, an Attio pipeline and conversations with creators about how they close sponsorships today.">Próximo passo: sourcing no LinkedIn e em newsletters, pipeline no Attio e conversas com creators sobre como fecham publis hoje.</p>
     </div>
+  </section>
+
+  <!-- ETAPA 2 -->
+  <section id="etapa2">
+    <div class="sec-head">
+      <span class="eyebrow" data-en="Stage 2 · In progress">Etapa 2 · Em construção</span>
+      <h2 class="display" data-en="The automated&lt;br&gt;flow">O fluxo<br>automático</h2>
+      <p class="serif" data-en="From brief to shortlist without manual work, and a pipeline that runs every week.">Do brief à shortlist sem trabalho manual, e um pipeline que roda toda semana.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-note"><span data-en="How a brief will flow through the system. The search always starts with creators already vetted; new sourcing only opens when there aren't enough matches.">Como um brief vai passar pelo sistema. A busca sempre começa pelos creators já avaliados; um sourcing novo só abre quando faltam opções.</span></div>
+      <ol class="flow">
+        <li data-en="Brief arrives · Slack or a form">Brief chega · Slack ou formulário</li>
+        <li data-en="Claude turns it into criteria · niche, platform, size, language, red flags">Claude transforma em critérios · nicho, plataforma, porte, idioma, red flags</li>
+        <li data-en="Search the map of vetted creators">Busca no mapa de creators avaliados</li>
+        <li data-en="Not enough? A new sourcing batch">Faltou gente? Um lote novo de sourcing</li>
+        <li data-en="Score against the brief">Pontua contra o brief</li>
+        <li data-en="I approve in Slack">Eu aprovo no Slack</li>
+        <li data-en="Logged in Attio, with a reason for every rejection">Registro no Attio, com motivo para cada rejeição</li>
+      </ol>
+      <div class="cards">
+        <div class="card"><b data-en="Key metric">Métrica principal</b><p data-en="Minutes from the brief arriving to an approved shortlist.">Minutos entre a chegada do brief e a shortlist aprovada.</p></div>
+        <div class="card"><b data-en="Weekly pipeline">Pipeline semanal</b><p data-en="LinkedIn (via Clay), YouTube and newsletters, prioritizing niches with thin supply. Funnel: found → approved → contacted → replied.">LinkedIn (pelo Clay), YouTube e newsletters, priorizando nichos com pouca oferta. Funil: encontrados → aprovados → contatados → responderam.</p></div>
+        <div class="card"><b data-en="Talking to creators">Conversa com creators</b><p data-en="5 to 8 conversations, in my own name, about how they close sponsorships today. Real insight, without speaking for Passionfroot.">De 5 a 8 conversas, no meu nome, sobre como fecham publis hoje. Insight de verdade, sem falar em nome da Passionfroot.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUIDADOS -->
+  <section id="cuidados">
+    <div class="sec-head">
+      <span class="eyebrow" data-en="Ground rules">Cuidados</span>
+      <h2 class="display" data-en="What this case&lt;br&gt;is not">O que este case<br>não é</h2>
+    </div>
+    <ul class="checks">
+      <li data-en="The ElevenLabs campaign is hypothetical. This is an independent project, not affiliated with Passionfroot or ElevenLabs.">A campanha da ElevenLabs é hipotética. Este é um projeto independente, sem vínculo com a Passionfroot ou a ElevenLabs.</li>
+      <li data-en="No creator was contacted on behalf of Passionfroot or ElevenLabs. Any conversation is in my own name.">Nenhum creator foi contatado em nome da Passionfroot ou da ElevenLabs. Qualquer conversa é no meu nome.</li>
+      <li data-en="Only public channel data was used. Emails and phone numbers stay out of this page (Brazil’s LGPD).">Só foram usados dados públicos dos canais. E-mails e telefones ficam fora desta página (LGPD).</li>
+      <li data-en="Prices are estimates based on Passionfroot’s pricing guide, not quotes from the creators.">Os preços são estimativas com base no guia de preços da Passionfroot, não cotações dos creators.</li>
+    </ul>
   </section>
 
   <footer>
