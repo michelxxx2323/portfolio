@@ -672,6 +672,15 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
     <div class="ai-list" id="aiList">
       <article class="ai-row" data-s="build">
         <span class="state build" data-en="In progress">Em construção</span>
+        <div><h3>Creator Supply Engine</h3><p data-en="Case for Passionfroot">Case para a Passionfroot</p></div>
+        <p data-en="Finds Brazilian B2B creators on YouTube, vets each one with two AI models (Jev and Claude) plus my call on split verdicts, and prices them with an engagement guardrail.">Encontra creators B2B brasileiros no YouTube, avalia cada um com dois modelos de IA (Jev e Claude) e a minha decisão nos empates, e precifica com um guardrail de engajamento.</p>
+        <div class="ai-side">
+          <div class="tags"><span class="tag">Jev · TypeSafe</span><span class="tag">Claude Code</span><span class="tag">YouTube API</span></div>
+          <a class="gh" href="creators.html"><span data-en="See the case">Ver o case</span> →</a>
+        </div>
+      </article>
+      <article class="ai-row" data-s="build">
+        <span class="state build" data-en="In progress">Em construção</span>
         <div><h3>Agente SDR “P.H.”</h3><p data-en="BRAX, a fictional fintech">BRAX, fintech fictícia</p></div>
         <p data-en="An AI SDR that prospects and replies to startups interested in a digital business account, over email and WhatsApp, backed by a central knowledge base.">SDR de IA que prospecta e responde startups interessadas em uma conta PJ digital, por e-mail e WhatsApp, apoiado em uma base de conhecimento central.</p>
         <div class="ai-side">
@@ -865,26 +874,28 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
   document.getElementById("lbClose").addEventListener("click", function(){ lb.close(); });
   lb.addEventListener("click", function(e){ if (e.target === lb || e.target === lbImg) lb.close(); });
 
-  /* Tabs */
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
-  tabs.forEach(function(t, idx){
-    t.addEventListener("click", function(){ select(t); });
-    t.addEventListener("keydown", function(e){
-      if (e.key === "ArrowRight" || e.key === "ArrowLeft"){
-        var n = tabs[(idx + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
-        select(n); n.focus();
-      }
+  /* Tabs: each tablist switches only its own panels */
+  document.querySelectorAll('[role="tablist"]').forEach(function(list){
+    var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
+    function select(t){
+      tabs.forEach(function(o){
+        var on = o === t;
+        o.setAttribute("aria-selected", on);
+        o.tabIndex = on ? 0 : -1;
+        document.getElementById(o.getAttribute("aria-controls")).hidden = !on;
+      });
+    }
+    tabs.forEach(function(t, idx){
+      t.addEventListener("click", function(){ select(t); });
+      t.addEventListener("keydown", function(e){
+        if (e.key === "ArrowRight" || e.key === "ArrowLeft"){
+          var n = tabs[(idx + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
+          select(n); n.focus();
+        }
+      });
     });
+    select(tabs[0]);
   });
-  function select(t){
-    tabs.forEach(function(o){
-      var on = o === t;
-      o.setAttribute("aria-selected", on);
-      o.tabIndex = on ? 0 : -1;
-      document.getElementById(o.getAttribute("aria-controls")).hidden = !on;
-    });
-  }
-  select(tabs[0]);
 
   /* A/B */
   var ab = document.getElementById("ab"), abPick = null;
@@ -944,6 +955,8 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
   try { start = localStorage.getItem("lang") || "pt"; } catch(e){}
   if (location.hash === "#en") start = "en";
   if (location.hash === "#pt") start = "pt";
+  // ?lang=en lets a shared link open the site in English
+  try { var q = new URLSearchParams(location.search).get("lang"); if (q === "en" || q === "pt") start = q; } catch(e){}
   setLang(start);
 
   /* Timeline progress */
