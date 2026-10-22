@@ -169,6 +169,7 @@ details[open] .plus{transform:rotate(45deg);background:var(--fg);color:var(--bg)
 .tabs button{font:500 .88rem/1 var(--f-body);border:0;background:transparent;color:var(--muted);padding:11px 18px;border-radius:999px;cursor:pointer;white-space:nowrap}
 .tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg)}
 .panel{display:grid;gap:18px}
+.panel + .panel{margin-top:32px}
 .panel-note{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;color:var(--muted);font-size:.9rem}
 .ig{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:760px}
 .shot{display:block;padding:0;border:0;background:var(--ph);cursor:zoom-in;overflow:hidden;border-radius:6px}
@@ -497,7 +498,7 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
       <div class="cards">
         <div class="card"><b data-en="Rubric">Rubrica</b><p data-en="Gates first (Portuguese, is a person, no red flags, posted in 30 days), then six weighted criteria: B2B fit, content quality, engagement, consistency, sponsorship readiness and regional fit.">Primeiro os portões (português, é pessoa, sem red flags, postou em 30 dias), depois seis critérios com peso: fit B2B, qualidade, engajamento, consistência, prontidão para publi e fit regional.</p></div>
         <div class="card"><b data-en="Cost">Custo</b><strong data-en="&amp;lt; US$&amp;nbsp;0.10">&lt; US$&nbsp;0,10</strong><p data-en="in Jev calls to vet every channel, on the free YouTube API quota.">em chamadas ao Jev para avaliar todos os canais, dentro da cota gratuita da API do YouTube.</p></div>
-        <div class="card"><b>Stack</b><div class="tags"><span class="tag">YouTube Data API</span><span class="tag">Jev · TypeSafe</span><span class="tag">Claude Code</span><span class="tag">Node.js</span></div><p data-en="Clay, Attio and n8n come in the next stage: LinkedIn sourcing, a weekly pipeline and same-day briefs.">Clay, Attio e n8n entram na próxima etapa: sourcing no LinkedIn, pipeline semanal e brief no mesmo dia.</p></div>
+        <div class="card"><b>Stack</b><div class="tags"><span class="tag">YouTube Data API</span><span class="tag">Jev · TypeSafe</span><span class="tag">Claude Code</span><span class="tag">Node.js</span><span class="tag">Clay</span><span class="tag">Apollo</span></div><p data-en="Clay and Apollo already run LinkedIn sourcing (free plan). Attio and n8n come next: a weekly pipeline and same-day briefs.">Clay e Apollo já fazem o sourcing no LinkedIn (plano gratuito). Attio e n8n vêm a seguir: pipeline semanal e brief no mesmo dia.</p></div>
       </div>
     </div>
 
@@ -597,6 +598,44 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
         <div class="card"><b data-en="Key metric">Métrica principal</b><p data-en="Minutes from the brief arriving to an approved shortlist.">Minutos entre a chegada do brief e a shortlist aprovada.</p></div>
         <div class="card"><b data-en="Weekly pipeline">Pipeline semanal</b><p data-en="LinkedIn (via Clay), YouTube and newsletters, prioritizing niches with thin supply. Funnel: found → approved → contacted → replied.">LinkedIn (pelo Clay), YouTube e newsletters, priorizando nichos com pouca oferta. Funil: encontrados → aprovados → contatados → responderam.</p></div>
         <div class="card"><b data-en="Talking to creators">Conversa com creators</b><p data-en="5 to 8 conversations, in my own name, about how they close sponsorships today. Real insight, without speaking for Passionfroot.">De 5 a 8 conversas, no meu nome, sobre como fecham publis hoje. Insight de verdade, sem falar em nome da Passionfroot.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLAY -->
+  <section id="clay">
+    <div class="sec-head">
+      <span class="eyebrow" data-en="Clay · Free plan">Clay · Plano gratuito</span>
+      <h2 class="display" data-en="What fit in&lt;br&gt;the free plan">O que coube<br>no plano gratuito</h2>
+      <p class="serif" data-en="I built this case without spending money. In Clay, that meant one LinkedIn search and one niche. Below is what I ran, and the flow I would run with credits.">Fiz este case sem gastar dinheiro. Na Clay, isso limitou o LinkedIn a uma busca e a um nicho. Abaixo está o que rodei e o fluxo que eu rodaria com créditos.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-note"><span data-en="What I ran: one batch, end to end. Since “Top Voice” and HR terms dominated the search, 7 of the 10 approved creators are in HR. The other niches were left for a paid plan.">O que rodei: um lote, de ponta a ponta. Como “Top Voice” e os termos de RH dominaram a busca, 7 dos 10 aprovados são de RH. Os outros nichos ficaram para um plano pago.</span></div>
+      <ol class="flow">
+        <li data-en="People search in Clay · Brazil, 10k+ followers, creator signals (Top Voice, newsletter) and niche terms">Busca de pessoas na Clay · Brasil, 10 mil+ seguidores, sinais de creator (Top Voice, newsletter) e termos de nicho</li>
+        <li data-en="50 profiles · half of the monthly search quota">50 perfis · metade da quota mensal de busca</li>
+        <li data-en="Workflow 1: profile enrichment · headline, about, followers, current roles">Workflow 1: enrich do perfil · headline, sobre, seguidores, cargos atuais</li>
+        <li data-en="Jev screens the profile only · decides who is worth reading posts for">Triagem do Jev só pelo perfil · decide quem vale a leitura dos posts</li>
+        <li data-en="Workflow 2: latest posts for 13 profiles · the most expensive step">Workflow 2: últimos posts de 13 perfis · a etapa mais cara</li>
+        <li data-en="Double vetting, Jev + Claude · 10 approved">Duplo vetting Jev + Claude · 10 aprovados</li>
+        <li data-en="Apollo list · emails stay inside Apollo, never on this page">Lista no Apollo · e-mails ficam dentro do Apollo, nunca nesta página</li>
+      </ol>
+    </div>
+    <div class="panel">
+      <div class="panel-note"><span data-en="With credits: the same logic, one search per niche, running every week.">Com créditos: a mesma lógica, uma busca por nicho, rodando toda semana.</span></div>
+      <ol class="flow">
+        <li data-en="One search per Passionfroot niche · marketing, product, sales, finance, data, HR, health, legal, founders">Uma busca por nicho da Passionfroot · marketing, produto, vendas, finanças, dados, RH, saúde, jurídico, founders</li>
+        <li data-en="Import approved YouTube and newsletter creators too · find each one’s LinkedIn">Importar também os aprovados do YouTube e das newsletters · achar o LinkedIn de cada um</li>
+        <li data-en="Profile enrichment + an engagement formula · reactions per thousand followers">Enrich do perfil + fórmula de engajamento · reações por mil seguidores</li>
+        <li data-en="Jev through Clay’s HTTP API column · gates, fit and category on every row">Jev pela coluna de HTTP API da Clay · portões, fit e categoria em toda linha</li>
+        <li data-en="Posts only for profiles that pass screening · a conditional column saves credits">Posts só para quem passa na triagem · coluna condicional economiza crédito</li>
+        <li data-en="Email waterfall only for approved creators · stored in Attio, never on a public page">Waterfall de e-mail só para aprovados · guardado no Attio, nunca em página pública</li>
+        <li data-en="Sent to Attio as “Vetted” · weekly run, deduplicated against past batches">Envio para o Attio como “Vetted” · roda toda semana, sem repetir quem já foi visto</li>
+      </ol>
+      <div class="cards">
+        <div class="card"><b data-en="Cost per approved creator">Custo por aprovado</b><p data-en="About 7 Clay credits, measured in batch 1: 0.5 per enriched profile and about 3.5 to read 3 posts, before any email lookup.">Cerca de 7 créditos da Clay, medido no lote 1: 0,5 por perfil enriquecido e uns 3,5 para ler 3 posts, antes de buscar e-mail.</p></div>
+        <div class="card"><b data-en="Screen before reading posts">Triagem antes dos posts</b><p data-en="Reading posts costs about 7 times as much as the enrichment. Screening the profile first cut 50 profiles down to 13.">Ler posts custa umas 7 vezes o enrich. A triagem pelo perfil cortou 50 perfis para 13.</p></div>
+        <div class="card"><b data-en="One rubric everywhere">Uma rubrica em todo lugar</b><p data-en="Calling Jev from inside Clay keeps LinkedIn on the same rubric as YouTube and newsletters, so the gap map compares like with like.">Chamar o Jev de dentro da Clay mantém o LinkedIn na mesma rubrica do YouTube e das newsletters, e o mapa de gaps compara coisas iguais.</p></div>
       </div>
     </div>
   </section>
