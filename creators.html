@@ -168,6 +168,8 @@ details[open] .plus{transform:rotate(45deg);background:var(--fg);color:var(--bg)
 .tabs{display:flex;gap:4px;padding:4px;background:var(--sunk);border-radius:999px;width:max-content;max-width:100%;overflow-x:auto;margin-bottom:22px}
 .tabs button{font:500 .88rem/1 var(--f-body);border:0;background:transparent;color:var(--muted);padding:11px 18px;border-radius:999px;cursor:pointer;white-space:nowrap}
 .tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg)}
+.tabs-sub{margin-bottom:4px}
+.tabs-sub button{font-size:.8rem;padding:8px 14px}
 .panel{display:grid;gap:18px}
 .panel + .panel{margin-top:32px}
 .panel-note{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;color:var(--muted);font-size:.9rem}
@@ -863,16 +865,42 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
     </div>
 
     <div class="panel" role="tabpanel" id="p-tl-apollo" aria-labelledby="t-tl-apollo" hidden>
-      <div class="panel-note"><span class="tag">3 sequences</span><span class="tag">Inactive</span><span class="tag">0 contacts</span><span class="tag">No mailbox</span><span data-en="One template sequence per platform, read from the Apollo API; workflow 2 picks it from the creator’s platform in Attio. Written as if I worked at Passionfroot; never sent. Below: “[TEMPLATE — do not send] Passionfroot · YouTube creators”.">Uma sequência-modelo por plataforma, lida pela API do Apollo; o workflow 2 escolhe pela plataforma do creator no Attio. Escrito como se eu trabalhasse na Passionfroot; nunca enviado. Abaixo: “[TEMPLATE — do not send] Passionfroot · YouTube creators”.</span></div>
-      <ol class="fc" aria-label="Apollo sequence, 5 steps over 13 days">
-        <li class="fc-node"><b>Day 0 · Automatic email</b><small>Subject: [channel name] × B2B brands</small><span class="fc-tool">Email</span></li>
-        <li class="fc-edge"><span>+3 days</span></li><li class="fc-node"><b>Day 3 · Automatic email</b><small>Hi {{first_name}}, to make it concrete, I mocked up what your media kit could look like with your public numbers (attached): [formats, e.g. integratio…</small><span class="fc-tool">Email</span></li>
-        <li class="fc-edge"><span>+3 days</span></li><li class="fc-node"><b>Day 6 · DM (manual task)</b><small>Instagram DM, only if the creator lists a business Instagram on the channel. Text: &quot;Hi [first name]! Michel from Passionfroot. I emailed you about B2B brands for [channel]. Easier to talk here?&quot; One message, no follow-up DM.</small><span class="fc-tool">Instagram</span></li>
-        <li class="fc-edge"><span>+3 days</span></li><li class="fc-node"><b>Day 9 · Automatic email</b><small>Hi {{first_name}}, one example that may help: [creator from the Passionfroot gallery in the same category] and how they [result from their creator sto…</small><span class="fc-tool">Email</span></li>
-        <li class="fc-edge"><span>+4 days</span></li><li class="fc-node"><b>Day 13 · Automatic email</b><small>Hi {{first_name}}, last note from me. [Brand in your category] has an open campaign for creators like you until [date]; with a page set up, you can ap…</small><span class="fc-tool">Email</span></li>
-      </ol>
-      <div class="tl-row"><b>Newsletter creators</b><div class="tags"><span class="tag">Day 0 · Email</span><span class="tag">Day 3 · Email</span><span class="tag">Day 6 · LinkedIn connect</span><span class="tag">Day 9 · Email</span><span class="tag">Day 13 · Email</span></div></div>
-      <div class="tl-row"><b>LinkedIn creators</b><div class="tags"><span class="tag">Day 0 · LinkedIn view</span><span class="tag">Day 1 · LinkedIn connect</span><span class="tag">Day 3 · LinkedIn message</span><span class="tag">Day 7 · LinkedIn message</span><span class="tag">Day 12 · LinkedIn message</span></div></div>
+      <div class="panel-note"><span class="tag">3 sequences</span><span class="tag">Inactive</span><span class="tag">0 contacts</span><span class="tag">No mailbox</span><span data-en="One template sequence per platform, read from the Apollo API; workflow 2 picks it from the creator’s platform in Attio. Written as if I worked at Passionfroot; never sent.">Uma sequência-modelo por plataforma, lida pela API do Apollo; o workflow 2 escolhe pela plataforma do creator no Attio. Escrito como se eu trabalhasse na Passionfroot; nunca enviado.</span></div>
+      <div class="tabs tabs-sub" role="tablist" aria-label="Apollo sequences">
+        <button role="tab" id="t-ap-youtube" aria-controls="p-ap-youtube" aria-selected="true">YouTube</button>
+        <button role="tab" id="t-ap-newsletter" aria-controls="p-ap-newsletter" aria-selected="false">Newsletter</button>
+        <button role="tab" id="t-ap-linkedin" aria-controls="p-ap-linkedin" aria-selected="false">LinkedIn</button>
+      </div>
+      <div class="panel" role="tabpanel" id="p-ap-youtube" aria-labelledby="t-ap-youtube">
+        <p class="tl-code" data-en="“[TEMPLATE — do not send] Passionfroot · YouTube creators” · 5 steps over 13 days">“[TEMPLATE — do not send] Passionfroot · YouTube creators” · 5 passos em 13 dias</p>
+        <ol class="fc" aria-label="Apollo sequence for YouTube, 5 steps over 13 days">
+          <li class="fc-node"><b>Day 0 · Automatic email</b><small>Subject: [channel name] × B2B brands</small><span class="fc-tool">Email</span></li>
+          <li class="fc-edge"><span>+3 days</span></li><li class="fc-node"><b>Day 3 · Automatic email</b><small>Hi {{first_name}}, to make it concrete, I mocked up what your media kit could look like with your public numbers (attached): [formats, e.g. integratio…</small><span class="fc-tool">Email</span></li>
+          <li class="fc-edge"><span>+3 days</span></li><li class="fc-node"><b>Day 6 · DM (manual task)</b><small>Instagram DM, only if the creator lists a business Instagram on the channel. Text: &quot;Hi [first name]! Michel from Passionfroot. I emailed you about B2B brands for [channel]. Easier to talk here?&quot; One message, no follow-up DM.</small><span class="fc-tool">Instagram</span></li>
+          <li class="fc-edge"><span>+3 days</span></li><li class="fc-node"><b>Day 9 · Automatic email</b><small>Hi {{first_name}}, one example that may help: [creator from the Passionfroot gallery in the same category] and how they [result from their creator sto…</small><span class="fc-tool">Email</span></li>
+          <li class="fc-edge"><span>+4 days</span></li><li class="fc-node"><b>Day 13 · Automatic email</b><small>Hi {{first_name}}, last note from me. [Brand in your category] has an open campaign for creators like you until [date]; with a page set up, you can ap…</small><span class="fc-tool">Email</span></li>
+        </ol>
+      </div>
+      <div class="panel" role="tabpanel" id="p-ap-newsletter" aria-labelledby="t-ap-newsletter" hidden>
+        <p class="tl-code" data-en="“[TEMPLATE — do not send] Passionfroot · Newsletter creators” · 5 steps over 13 days">“[TEMPLATE — do not send] Passionfroot · Newsletter creators” · 5 passos em 13 dias</p>
+        <ol class="fc" aria-label="Apollo sequence for Newsletter, 5 steps over 13 days">
+          <li class="fc-node"><b>Day 0 · Automatic email</b><small>Subject: Sponsors for [newsletter name]</small><span class="fc-tool">Email</span></li>
+          <li class="fc-edge"><span>+3 days</span></li><li class="fc-node"><b>Day 3 · Automatic email</b><small>Hi {{first_name}}, I mocked up your media kit with your public numbers (attached): a sponsored slot and a dedicated issue, starting at US$ [estimated …</small><span class="fc-tool">Email</span></li>
+          <li class="fc-edge"><span>+3 days · only if the newsletter links to the author's LinkedIn</span></li><li class="fc-node"><b>Day 6 · Connection request</b><small>Hi {{first_name}}! I read [newsletter name] and wrote to you by email about B2B sponsors. Happy to connect.</small><span class="fc-tool">LinkedIn</span></li>
+          <li class="fc-edge"><span>+3 days</span></li><li class="fc-node"><b>Day 9 · Automatic email</b><small>Hi {{first_name}}, one example that may help: [newsletter writer from the Passionfroot gallery] and how they [result from their creator story]: [story…</small><span class="fc-tool">Email</span></li>
+          <li class="fc-edge"><span>+4 days</span></li><li class="fc-node"><b>Day 13 · Automatic email</b><small>Hi {{first_name}}, last note from me. [Brand in your category] has an open campaign for newsletters like yours until [date]; with a page set up, you c…</small><span class="fc-tool">Email</span></li>
+        </ol>
+      </div>
+      <div class="panel" role="tabpanel" id="p-ap-linkedin" aria-labelledby="t-ap-linkedin" hidden>
+        <p class="tl-code" data-en="“[TEMPLATE — do not send] Passionfroot · LinkedIn creators” · 5 steps over 12 days">“[TEMPLATE — do not send] Passionfroot · LinkedIn creators” · 5 passos em 12 dias</p>
+        <ol class="fc" aria-label="Apollo sequence for LinkedIn, 5 steps over 12 days">
+          <li class="fc-node"><b>Day 0 · View profile</b><small>View the profile and react to a recent post, so the creator sees who is reaching out.</small><span class="fc-tool">LinkedIn</span></li>
+          <li class="fc-edge"><span>+1 day</span></li><li class="fc-node"><b>Day 1 · Connection request</b><small>Hi {{first_name}}! Your post on [recent post topic] was spot on. I work with B2B creators at Passionfroot, happy to connect.</small><span class="fc-tool">LinkedIn</span></li>
+          <li class="fc-edge"><span>+2 days · only if the connection was accepted</span></li><li class="fc-node"><b>Day 3 · Message</b><small>Thanks for connecting, {{first_name}}! Quick one: B2B brands book LinkedIn creators through Passionfroot, and your audience of [audience from vetting]…</small><span class="fc-tool">LinkedIn</span></li>
+          <li class="fc-edge"><span>+4 days · only if there was no reply</span></li><li class="fc-node"><b>Day 7 · Message</b><small>{{first_name}}, I mocked up what your media kit could look like with your numbers: [image]. Sponsored post and newsletter mention, starting at US$ [es…</small><span class="fc-tool">LinkedIn</span></li>
+          <li class="fc-edge"><span>+5 days</span></li><li class="fc-node"><b>Day 12 · Message</b><small>Last one from me, {{first_name}}: [brand in your category] has an open campaign for creators like you until [date]. If now is not the time, no problem…</small><span class="fc-tool">LinkedIn</span></li>
+        </ol>
+      </div>
       <div class="tl-row"><b data-en="Custom contact fields, filled from Attio">Campos personalizados do contato, preenchidos pelo Attio</b><div class="tags"><span class="tag">Creator link</span><span class="tag">Passionfroot category</span><span class="tag">Estimated rate (US$)</span><span class="tag">Platform</span><span class="tag">Attio record ID</span><span class="tag">Vetting score</span></div></div>
     </div>
 
