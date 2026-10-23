@@ -216,10 +216,29 @@ details[open] .plus{transform:rotate(45deg);background:var(--fg);color:var(--bg)
 #lb{width:auto;max-width:min(92vw,720px);background:transparent;border:0}
 #lb img{display:block;max-width:100%;max-height:86dvh;border-radius:10px}
 #lb .close{position:absolute;top:10px;right:10px}
-.flow{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;counter-reset:f}
-.flow li{counter-increment:f;display:inline-flex;align-items:center;gap:8px;font-size:.84rem;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
-.flow li::before{content:counter(f);font:500 .7rem/1 var(--f-mono);color:var(--accent-ink)}
-.flow li + li{position:relative}
+/* Fluxograma: caixas, setas rotuladas, decisões com ramificação, passo humano em destaque */
+.fc{list-style:none;margin:0;padding:0;display:grid;max-width:660px;counter-reset:fc}
+.fc-node{counter-increment:fc;display:grid;grid-template-columns:auto 1fr auto;gap:3px 12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 14px}
+.fc-node::before{content:counter(fc,decimal-leading-zero);grid-row:1 / span 2;font:500 .68rem/1 var(--f-mono);color:var(--accent-ink)}
+.fc-node b{font-weight:600;font-size:.92rem;line-height:1.3}
+.fc-node small{grid-column:2;color:var(--muted);font-size:.82rem;line-height:1.4}
+.fc-tool{grid-column:3;grid-row:1 / span 2;font:500 .6rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 8px;white-space:nowrap}
+.fc-node.is-human{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.fc-node.is-human .fc-tool{color:var(--accent-ink);border-color:var(--accent)}
+.fc-node.is-decision{border-style:dashed}
+.fc-node.is-decision::before{content:"◇";font-size:.9rem;color:var(--muted)}
+.fc-node.is-off{border-style:dashed;opacity:.72}
+.fc-edge{position:relative;min-height:32px;margin-left:24px;padding:6px 0 6px 16px;display:flex;align-items:center;font:500 .68rem/1.3 var(--f-mono);letter-spacing:.04em;color:var(--muted)}
+.fc-edge::before{content:"";position:absolute;left:0;top:0;bottom:6px;border-left:1.5px solid var(--muted)}
+.fc-edge::after{content:"";position:absolute;left:-4.25px;bottom:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--muted)}
+.fc-split{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.fc-out{display:grid;gap:0;align-content:start}
+.fc-out > .fc-edge{margin-left:18px}
+.fc-out .fc-node{counter-increment:none;grid-template-columns:1fr auto}
+.fc-out .fc-node::before{display:none}
+.fc-out .fc-node small{grid-column:1}
+.fc-out .fc-tool{grid-column:2}
+@media (max-width:520px){.fc-node{grid-template-columns:auto 1fr}.fc-tool{grid-column:2;grid-row:auto;justify-self:start}.fc-out .fc-tool{grid-column:1}}
 .mails{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;max-width:920px}
 @media (max-width:640px){.mails{grid-template-columns:1fr 1fr;gap:14px}.mail .shot{height:320px}}
 .mail{margin:0;display:grid;gap:10px;align-content:start}
@@ -364,6 +383,71 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
 .checks{margin:0;padding:0;list-style:none;display:grid;gap:8px;max-width:72ch}
 .checks li{position:relative;padding-left:18px;font-size:.95rem;color:var(--muted)}
 .checks li::before{content:"";position:absolute;left:0;top:.7em;width:8px;height:1px;background:var(--accent)}
+/* Seção "In the tools": canvas de workflow, quadro do Attio */
+.cv-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--sunk);padding:8px}
+.cv{display:block;height:auto;max-width:none}
+.cv-node{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+.cv-node.is-trigger{stroke:var(--accent);stroke-width:1.6}
+.cv-node.is-off{stroke-dasharray:5 4;opacity:.7}
+.cv-kind{font:500 10px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
+.cv-name{font:500 12.5px var(--f-body);fill:var(--fg)}
+.cv-edge{fill:none;stroke:var(--muted);stroke-width:1.3}
+.cv-head{fill:var(--muted)}
+.cv-port{font:500 9.5px var(--f-mono);fill:var(--accent-ink)}
+.tl-code{font:500 .78rem/1.5 var(--f-mono);color:var(--muted);max-width:960px}
+.tl-shot{margin:0;display:grid;gap:8px}
+.tl-shot img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:var(--r);background:#fff}
+.tl-shot figcaption{font-size:.8rem;color:var(--muted)}
+.tl-shot a{display:block;cursor:zoom-in}
+.tl-zoom{padding:0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);max-width:96vw;max-height:92vh;width:max-content;overflow:hidden}
+.tl-zoom::backdrop{background:rgba(0,0,0,.7)}
+.tl-zoom-body{max-width:96vw;max-height:92vh;overflow:auto}
+.tl-zoom-body img{display:block;max-width:none;height:auto;background:#fff}
+.tl-zoom-close{position:absolute;top:8px;right:8px;width:36px;height:36px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);font-size:1.3rem;line-height:1;cursor:pointer}
+.tl-row{display:grid;gap:10px;max-width:960px}
+.tl-row > b,.tl-mini{font:500 .7rem/1.2 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink)}
+.tl-board{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(168px,1fr);gap:10px;overflow-x:auto;padding-bottom:6px}
+.tl-col{background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:8px;align-content:start;min-height:120px}
+.tl-col-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.tl-col-head b{font-size:.82rem;font-weight:600}
+.tl-col-head span{font:600 .9rem var(--f-display);font-variant-numeric:tabular-nums}
+.tl-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;display:grid;gap:2px}
+.tl-card b{font-size:.8rem;font-weight:600;line-height:1.3}
+.tl-card small{font-size:.72rem;color:var(--muted)}
+.tl-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:14px;max-width:960px}
+.tl-stack{display:grid;gap:14px;align-content:start}
+.tl-table{border-collapse:collapse;font-size:.84rem;width:100%}
+.tl-table th{text-align:left;font-weight:500;color:var(--muted);padding:6px 12px 6px 0;vertical-align:top;white-space:nowrap}
+.tl-table td{padding:6px 0;border-top:1px solid var(--line);word-break:break-word}
+.tl-table tr:first-child td{border-top:0}
+@media (max-width:760px){.tl-grid{grid-template-columns:1fr}.tl-table th{white-space:normal}}
+/* /tools */
+.appendix{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);max-width:1180px}
+.appendix > summary{cursor:pointer;padding:18px 20px;font-weight:600;list-style-position:inside}
+.appendix-body{padding:0 20px 24px}
+/* Mapa de gaps (cores validadas com o validador de paleta, claro e escuro) */
+:root{--gp-b2b:#C46F00;--gp-pro:#3B6FC4}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--gp-b2b:#CC7712;--gp-pro:#5A8BE0}}
+:root[data-theme="dark"]{--gp-b2b:#CC7712;--gp-pro:#5A8BE0}
+.gp{margin:0;display:grid;gap:16px;max-width:860px}
+.gp-legend{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:.84rem;color:var(--muted)}
+.gp-legend > span{display:inline-flex;align-items:center;gap:8px}
+.gp-sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.gp-sw.is-b2b,.gp-seg.is-b2b{background:var(--gp-b2b)}
+.gp-sw.is-pro,.gp-seg.is-pro{background:var(--gp-pro)}
+.gp-rows{display:grid;gap:8px}
+.gp-row{display:grid;grid-template-columns:minmax(120px,15rem) 1fr 3rem;align-items:center;gap:12px}
+.gp-label{font-size:.86rem;color:var(--fg)}
+.gp-track{display:flex;gap:2px;height:18px}
+.gp-seg{position:relative;height:100%;outline-offset:2px}
+.gp-seg:last-child{border-radius:0 4px 4px 0}
+.gp-seg:hover,.gp-seg:focus-visible{filter:brightness(1.12)}
+.gp-seg:hover::after,.gp-seg:focus-visible::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:0;white-space:nowrap;background:var(--fg);color:var(--bg);font:500 .72rem/1 var(--f-mono);padding:6px 8px;border-radius:6px;z-index:2;pointer-events:none}
+.gp-val{font:600 .9rem var(--f-display);font-variant-numeric:tabular-nums;color:var(--fg)}
+.gp figcaption{font-size:.9rem;color:var(--muted);max-width:72ch}
+.gp-table summary{cursor:pointer;font-size:.84rem;color:var(--muted)}
+@media (max-width:560px){.gp-row{grid-template-columns:1fr 2.5rem}.gp-label{grid-column:1 / -1}}
+/* /gaps */
 </style>
 </head>
 <body>
@@ -393,13 +477,19 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
     <p class="lede" data-en="An independent case for Passionfroot’s Creator Acquisition Analyst role: the first two weeks on the job, simulated with real data from the Brazilian market.">Um case independente para a vaga de Creator Acquisition Analyst da Passionfroot: as duas primeiras semanas no cargo, simuladas com dados reais do mercado brasileiro.</p>
     <div class="intro-grid">
       <div class="prose">
-        <h3 data-en="In 30 seconds">Em 30 segundos</h3>
-        <p data-en="&lt;b&gt;Passionfroot&lt;/b&gt; is a platform where B2B brands book sponsorships with creators: people who publish content for professionals on YouTube, LinkedIn and newsletters. The &lt;b&gt;Creator Acquisition Analyst&lt;/b&gt; brings creators onto the platform: finds them, checks whether they fit each campaign, and gets them ready for brands.">A <b>Passionfroot</b> é uma plataforma onde marcas B2B contratam publis com creators: pessoas que publicam conteúdo para profissionais no YouTube, LinkedIn e em newsletters. O <b>Creator Acquisition Analyst</b> traz esses creators para a plataforma: encontra, avalia se servem para cada campanha e prepara cada um para as marcas.</p>
+        <h3 data-en="The results">Os resultados</h3>
+        <div class="facts">
+          <div class="fact"><b>661</b><span data-en="creators in an Attio pipeline, each vetted by two AI models">creators num pipeline no Attio, cada um avaliado por duas IAs</span></div>
+          <div class="fact"><b>19</b><span data-en="creators picked for a brand brief in under 3 minutes, US$13.5K, with no manual step between brief and deal">creators escolhidos para um brief em menos de 3 minutos, US<span data-en="creators picked for a brand brief, US$13.5K, with no manual step between brief and deal">creators escolhidos para um brief, US$&nbsp;13,5 mil, sem passo manual entre o brief e o deal</span>nbsp;13,5 mil, sem passo manual entre o brief e o deal</span></div>
+          <div class="fact"><b>0</b><span data-en="Brazilians among the creators featured on Passionfroot’s For Creators page">brasileiros entre os creators em destaque na página For Creators da Passionfroot</span></div>
+          <div class="fact"><b>17 / 167</b><span data-en="approved creators in health against tech and business: where supply is thin">aprovados em saúde contra tech e negócios: onde falta supply</span></div>
+        </div>
+        <p data-en="Passionfroot is where B2B brands book sponsorships with creators. The analyst finds those creators, vets them against each brief and gets them ready for brands; this case does both jobs on the Brazilian market.">A Passionfroot é onde marcas B2B contratam publis com creators. O analista encontra esses creators, avalia cada um contra o brief e prepara para as marcas; este case faz as duas frentes no mercado brasileiro.</p>
         <a class="jump" href="https://www.passionfroot.me/careers/creator-acquisition-analyst-01437b8d" target="_blank" rel="noopener" data-en="The job posting: Creator Acquisition Analyst ↗">A vaga: Creator Acquisition Analyst ↗</a>
       </div>
       <aside class="status">
         <div><b data-en="Stage 1 · Done">Etapa 1 · Concluída</b><span data-en="A campaign request from ElevenLabs, answered with a 15-creator shortlist.">Um pedido de campanha da ElevenLabs, respondido com uma shortlist de 15 creators.</span></div>
-        <div><b data-en="Stage 2 · In progress">Etapa 2 · Em construção</b><span data-en="The automated flow and a weekly creator pipeline. Due in November 2026.">O fluxo automático e um pipeline semanal de creators. Previsão: novembro de 2026.</span></div>
+        <div><b data-en="Stage 2 · Running on real data">Etapa 2 · Rodando com dados reais</b><span data-en="Both jobs run in n8n: brief to shortlist, and a weekly supply pipeline.">As duas frentes rodam no n8n: do brief à shortlist e um pipeline semanal de supply.</span></div>
       </aside>
     </div>
   </header>
@@ -424,11 +514,11 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
         <a class="jump" href="#etapa1" data-en="See stage 1 ↓">Ver a etapa 1 ↓</a>
       </article>
       <article class="step">
-        <span class="state build" data-en="Stage 2 · In progress">Etapa 2 · Em construção</span>
+        <span class="state use" data-en="Stage 2 · Running on real data">Etapa 2 · Rodando com dados reais</span>
         <h3 data-en="The automated flow">O fluxo automático</h3>
-        <p data-en="Turning that manual work into a system that runs every week. A free-text brief arrives on Slack or a form, Claude turns it into criteria, the system searches the map of already-vetted creators and returns a shortlist for me to approve. Alongside it, a weekly pipeline brings new creators from LinkedIn, YouTube and newsletters into the niches where supply is thin, all logged in the CRM.">Transformar esse trabalho manual num sistema que roda toda semana. Um brief em texto livre chega pelo Slack ou por um formulário, o Claude transforma em critérios, o sistema busca no mapa de creators já avaliados e devolve uma shortlist para eu aprovar. Em paralelo, um pipeline semanal traz creators novos de LinkedIn, YouTube e newsletters para os nichos onde falta oferta, com tudo registrado no CRM.</p>
+        <p data-en="Turning that manual work into a system that runs every week. A free-text brief arrives through a form, Claude turns it into criteria, the system searches the map of already-vetted creators and returns a shortlist for me to approve. Alongside it, a weekly pipeline brings new creators from LinkedIn, YouTube and newsletters into the niches where supply is thin, all logged in the CRM.">Transformar esse trabalho manual num sistema que roda toda semana. Um brief em texto livre chega por um formulário, o Claude transforma em critérios, o sistema busca no mapa de creators já avaliados e devolve uma shortlist para eu aprovar. Em paralelo, um pipeline semanal traz creators novos de LinkedIn, YouTube e newsletters para os nichos onde falta oferta, com tudo registrado no CRM.</p>
         <ul>
-          <li data-en="Brief to approved shortlist, measured in minutes">Do brief à shortlist aprovada, medido em minutos</li>
+          <li data-en="Brief to shortlist in 2 min 49 s, then a human approval">Do brief à shortlist em 2 min 49 s, depois a aprovação humana</li>
           <li data-en="n8n + Claude, with human approval at the end">n8n + Claude, com aprovação humana no fim</li>
           <li data-en="Attio as the CRM, with a reason for every rejection">Attio como CRM, com motivo para cada rejeição</li>
         </ul>
@@ -450,10 +540,10 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
         <tbody>
           <tr><td data-en="Vet creators against a brief">Avaliar creators contra um brief</td><td data-en="A six-criteria rubric scored by two AI models, with my call on split verdicts">Rubrica de seis critérios, avaliada por duas IAs e com a minha decisão nos empates</td><td data-en="Done">Feito</td></tr>
           <tr><td data-en="Same-day shortlists for campaign managers">Shortlist no mesmo dia para os campaign managers</td><td data-en="A 15-creator shortlist for the ElevenLabs brief, with reasons and prices">Shortlist de 15 creators para o brief da ElevenLabs, com motivo e preço</td><td data-en="Done; automated in stage 2">Feito; automação na etapa 2</td></tr>
-          <tr><td data-en="Build lists in Clay and Apollo, track every creator in Attio">Montar listas no Clay e Apollo e registrar tudo no Attio</td><td data-en="Automated YouTube sourcing; LinkedIn via Clay and the Attio pipeline in stage 2">Sourcing automatizado no YouTube; LinkedIn pelo Clay e pipeline no Attio na etapa 2</td><td data-en="In progress">Em andamento</td></tr>
-          <tr><td data-en="Build automations with n8n and Claude">Automações com n8n e Claude</td><td data-en="Scripts that rerun every batch; an n8n flow from brief to shortlist">Scripts que rodam cada lote; fluxo n8n do brief à shortlist</td><td data-en="In progress">Em andamento</td></tr>
-          <tr><td data-en="Report on supply and gaps">Reportar supply e gaps</td><td data-en="Where Brazilian B2B supply is thin, by niche and platform">Onde falta supply B2B no Brasil, por nicho e plataforma</td><td data-en="Partial">Parcial</td></tr>
-          <tr><td data-en="15-minute onboarding calls">Calls de onboarding de 15 minutos</td><td data-en="A call script and conversations with 5 to 8 creators">Roteiro de call e conversas com 5 a 8 creators</td><td data-en="Planned">Planejado</td></tr>
+          <tr><td data-en="Build lists in Clay and Apollo, track every creator in Attio">Montar listas no Clay e Apollo e registrar tudo no Attio</td><td data-en="Automated YouTube and newsletter sourcing, LinkedIn through Clay, and 661 creators in an Attio pipeline">Sourcing automatizado no YouTube e nas newsletters, LinkedIn pela Clay e 661 creators num pipeline no Attio</td><td data-en="Done">Feito</td></tr>
+          <tr><td data-en="Build automations with n8n and Claude">Automações com n8n e Claude</td><td data-en="Scripts that rerun every batch; an n8n flow from brief to shortlist, tested end to end">Scripts que rodam cada lote; fluxo n8n do brief à shortlist, testado de ponta a ponta</td><td data-en="Done">Feito</td></tr>
+          <tr><td data-en="Report on supply and gaps">Reportar supply e gaps</td><td data-en="A gap map by category, live from Attio; the weekly workflow searches where it is thinnest">Um mapa de gaps por categoria, ao vivo do Attio; o workflow semanal busca onde está mais fino</td><td data-en="Done">Feito</td></tr>
+          <tr><td data-en="15-minute onboarding calls">Calls de onboarding de 15 minutos</td><td data-en="A call script and an outreach sequence, written but never sent">Roteiro de call e sequência de outreach, escritos mas nunca enviados</td><td data-en="Written">Escrito</td></tr>
         </tbody>
       </table>
     </div>
@@ -465,7 +555,7 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
       <div class="sec-head">
         <span class="eyebrow" data-en="Stage 1 · Campaign request">Etapa 1 · Pedido de campanha</span>
         <h2 class="display" data-en="From brief&lt;br&gt;to shortlist">Do brief<br>à shortlist</h2>
-        <p class="serif" data-en="How 924 channels found became 15 creators with a price.">Como 924 canais encontrados viraram 15 creators com preço.</p>
+        <p class="serif" data-en="How 924 channels found became 15 creators with a price. The numbers in this stage come from the first two YouTube batches, vetted with the original tech rubric.">Como 924 canais encontrados viraram 15 creators com preço. Os números desta etapa vêm dos dois primeiros lotes do YouTube, avaliados com a rubrica original de tech.</p>
       </div>
       <div class="facts">
         <div class="fact"><b>924</b><span data-en="YouTube channels found; 263 vetted in depth">canais do YouTube encontrados; 263 analisados a fundo</span></div>
@@ -486,19 +576,29 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
 
     <div class="panel" role="tabpanel" id="p-cs-sys" aria-labelledby="t-cs-sys">
       <div class="panel-note"><span data-en="From a search term to a priced shortlist. Every step is a script that can run again for the next batch.">Do termo de busca à shortlist com preço. Cada etapa é um script que roda de novo no próximo lote.</span></div>
-      <ol class="flow">
-        <li data-en="Sourcing · YouTube API, 28 searches in Portuguese">Sourcing · API do YouTube, 28 buscas em português</li>
-        <li data-en="Cheap filter · country, size, posted in 30 days">Filtro barato · país, porte, postou em 30 dias</li>
-        <li data-en="Blind double vetting · Jev and Claude">Duplo vetting às cegas · Jev e Claude</li>
-        <li data-en="Split calls · I decide">Disputas · eu decido</li>
-        <li data-en="Engagement and price guardrail">Guardrail de engajamento e preço</li>
-        <li data-en="Brief fit">Fit com o brief</li>
-        <li data-en="Shortlist + budget">Shortlist + budget</li>
+      <ol class="fc" aria-label="Stage 1 system: sourcing, cheap filter, blind double vetting, split calls, guardrail, brief fit, shortlist">
+        <li class="fc-node"><b data-en="Sourcing">Sourcing</b><small data-en="28 searches in Portuguese">28 buscas em português</small><span class="fc-tool">YouTube API</span></li>
+        <li class="fc-edge"><span data-en="924 channels">924 canais</span></li>
+        <li class="fc-node"><b data-en="Cheap filter">Filtro barato</b><small data-en="country, size, posted in the last 30 days">país, porte, postou nos últimos 30 dias</small><span class="fc-tool">Node.js</span></li>
+        <li class="fc-edge"><span data-en="263 to vet in depth">263 para avaliar a fundo</span></li>
+        <li class="fc-node"><b data-en="Blind double vetting">Duplo vetting às cegas</b><small data-en="same rubric; neither model sees the other's scores">mesma rubrica; um modelo não vê a nota do outro</small><span class="fc-tool">Jev · Claude</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node is-decision"><b data-en="Do they agree?">Eles concordam?</b><small data-en="gates, verdict, and fit or quality within 2 points">portões, veredito e fit ou qualidade com até 2 pontos</small><span class="fc-tool">Node.js</span></li>
+        <li class="fc-split">
+          <div class="fc-out"><span class="fc-edge" data-en="yes">sim</span><div class="fc-node"><b data-en="Verdict stands">Veredito vale</b><span class="fc-tool">Auto</span></div></div>
+          <div class="fc-out"><span class="fc-edge" data-en="split">disputa</span><div class="fc-node is-human"><b data-en="I decide">Eu decido</b><span class="fc-tool" data-en="Me">Eu</span></div></div>
+        </li>
+        <li class="fc-edge"><span data-en="94 approved">94 aprovados</span></li>
+        <li class="fc-node"><b data-en="Engagement and price guardrail">Guardrail de engajamento e preço</b><small data-en="views per subscriber against creators in the same price tier">views por inscrito contra creators da mesma faixa de preço</small><span class="fc-tool">Node.js</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node"><b data-en="Brief fit">Fit com o brief</b><small data-en="both models score each creator against the ElevenAgents brief">os dois modelos dão nota contra o brief da ElevenAgents</small><span class="fc-tool">Jev · Claude</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node"><b data-en="Shortlist + budget">Shortlist + budget</b><small data-en="15 creators, US$13.6K">15 creators, US$&nbsp;13,6 mil</small><span class="fc-tool" data-en="Output">Saída</span></li>
       </ol>
       <div class="cards">
         <div class="card"><b data-en="Rubric">Rubrica</b><p data-en="Gates first (Portuguese, is a person, no red flags, posted in 30 days), then six weighted criteria: B2B fit, content quality, engagement, consistency, sponsorship readiness and regional fit.">Primeiro os portões (português, é pessoa, sem red flags, postou em 30 dias), depois seis critérios com peso: fit B2B, qualidade, engajamento, consistência, prontidão para publi e fit regional.</p></div>
         <div class="card"><b data-en="Cost">Custo</b><strong data-en="&amp;lt; US$&amp;nbsp;0.10">&lt; US$&nbsp;0,10</strong><p data-en="in Jev calls to vet every channel, on the free YouTube API quota.">em chamadas ao Jev para avaliar todos os canais, dentro da cota gratuita da API do YouTube.</p></div>
-        <div class="card"><b>Stack</b><div class="tags"><span class="tag">YouTube Data API</span><span class="tag">Jev · TypeSafe</span><span class="tag">Claude Code</span><span class="tag">Node.js</span><span class="tag">Clay</span><span class="tag">Apollo</span></div><p data-en="Clay and Apollo already run LinkedIn sourcing (free plan). Attio and n8n come next: a weekly pipeline and same-day briefs.">Clay e Apollo já fazem o sourcing no LinkedIn (plano gratuito). Attio e n8n vêm a seguir: pipeline semanal e brief no mesmo dia.</p></div>
+        <div class="card"><b>Stack</b><div class="tags"><span class="tag">YouTube Data API</span><span class="tag">Jev · TypeSafe</span><span class="tag">Claude Code</span><span class="tag">Node.js</span><span class="tag">Clay</span><span class="tag">Apollo</span><span class="tag">Attio</span><span class="tag">n8n</span></div><p data-en="Clay and Apollo run LinkedIn sourcing (free plan). Attio holds the pipeline, and n8n turns a brief into a shortlist.">Clay e Apollo fazem o sourcing no LinkedIn (plano gratuito). O Attio guarda o pipeline, e o n8n transforma um brief em shortlist.</p></div>
       </div>
     </div>
 
@@ -579,63 +679,333 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
   <!-- ETAPA 2 -->
   <section id="etapa2">
     <div class="sec-head">
-      <span class="eyebrow" data-en="Stage 2 · In progress">Etapa 2 · Em construção</span>
+      <span class="eyebrow" data-en="Stage 2 · Built and run on real data">Etapa 2 · Montada e rodada com dados reais</span>
       <h2 class="display" data-en="The automated&lt;br&gt;flow">O fluxo<br>automático</h2>
-      <p class="serif" data-en="From brief to shortlist without manual work, and a pipeline that runs every week.">Do brief à shortlist sem trabalho manual, e um pipeline que roda toda semana.</p>
+      <p class="serif" data-en="Three n8n workflows split the role’s two jobs: answering a brief the same day (stage A) and keeping the supply full every week (stage B). The numbers here cover all batches, re-vetted with the Passionfroot rubric, plus the weekly workflow’s runs.">Três workflows no n8n dividem as duas frentes da vaga: responder um brief no mesmo dia (etapa A) e manter o supply cheio toda semana (etapa B). Os números aqui cobrem todos os lotes, reavaliados com a rubrica da Passionfroot, mais as rodadas do workflow semanal.</p>
     </div>
-    <div class="panel">
-      <div class="panel-note"><span data-en="How a brief will flow through the system. The search always starts with creators already vetted; new sourcing only opens when there aren't enough matches.">Como um brief vai passar pelo sistema. A busca sempre começa pelos creators já avaliados; um sourcing novo só abre quando faltam opções.</span></div>
-      <ol class="flow">
-        <li data-en="Brief arrives · Slack or a form">Brief chega · Slack ou formulário</li>
-        <li data-en="Claude turns it into criteria · niche, platform, size, language, red flags">Claude transforma em critérios · nicho, plataforma, porte, idioma, red flags</li>
-        <li data-en="Search the map of vetted creators">Busca no mapa de creators avaliados</li>
-        <li data-en="Not enough? A new sourcing batch">Faltou gente? Um lote novo de sourcing</li>
-        <li data-en="Score against the brief">Pontua contra o brief</li>
-        <li data-en="I approve in Slack">Eu aprovo no Slack</li>
-        <li data-en="Logged in Attio, with a reason for every rejection">Registro no Attio, com motivo para cada rejeição</li>
+
+    <div class="tabs" role="tablist" aria-label="Partes da etapa 2" data-en-label="Stage 2 sections">
+      <button role="tab" id="t-s2-a" aria-controls="p-s2-a" aria-selected="true" data-en="A · Brief → shortlist">A · Brief → shortlist</button>
+      <button role="tab" id="t-s2-b" aria-controls="p-s2-b" aria-selected="false" data-en="B · Weekly supply">B · Supply semanal</button>
+      <button role="tab" id="t-s2-out" aria-controls="p-s2-out" aria-selected="false" data-en="B · Outreach">B · Outreach</button>
+      <button role="tab" id="t-s2-fix" aria-controls="p-s2-fix" aria-selected="false" data-en="What broke">O que quebrou</button>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-s2-a" aria-labelledby="t-s2-a">
+      <div class="panel-note"><span data-en="Workflow 1, 15 nodes. Only creators already vetted are considered, and Jev and Claude score every match against the brief, blind to each other.">Workflow 1, 15 nós. Só entram creators que já passaram pelo vetting, e Jev e Claude dão nota a cada candidato contra o brief, sem ver a nota um do outro.</span></div>
+      <ol class="fc" aria-label="Stage A, workflow 1: brief form, Apollo, Claude criteria, Attio query, Claude and Jev score in parallel, shortlist within budget, deal in Attio, human approval">
+        <li class="fc-node"><b data-en="Brief form">Formulário de brief</b><small data-en="domain, product, budget, platforms · in production: the Passionfroot platform">domínio, produto, orçamento, plataformas · em produção: a plataforma da Passionfroot</small><span class="fc-tool">n8n</span></li>
+        <li class="fc-edge"><span data-en="brand domain">domínio da marca</span></li>
+        <li class="fc-node"><b data-en="Enrich the brand">Enriquece a marca</b><small data-en="industry, size, description">setor, porte, descrição</small><span class="fc-tool">Apollo</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node"><b data-en="Brief → criteria">Brief → critérios</b><small data-en="categories, platforms, minimum fit, an “ideal creator”">categorias, plataformas, fit mínimo, um “creator ideal”</small><span class="fc-tool">Claude</span></li>
+        <li class="fc-edge"><span data-en="filters">filtros</span></li>
+        <li class="fc-node"><b data-en="Query the vetted supply">Busca no supply aprovado</b><small data-en="every approved creator that matches">todos os aprovados que batem</small><span class="fc-tool">Attio</span></li>
+        <li class="fc-edge"><span data-en="297 matches, scored blind, in parallel">297 candidatos, avaliados às cegas, em paralelo</span></li>
+        <li class="fc-split">
+          <div class="fc-out"><div class="fc-node"><b data-en="Score 0–10 vs. the brief">Nota 0–10 contra o brief</b><span class="fc-tool">Claude</span></div></div>
+          <div class="fc-out"><div class="fc-node"><b data-en="Score 0–10 vs. the brief">Nota 0–10 contra o brief</b><span class="fc-tool">Jev</span></div></div>
+        </li>
+        <li class="fc-edge"><span data-en="average · ⚠ when they differ by 4+">média · ⚠ quando diferem 4+</span></li>
+        <li class="fc-node"><b data-en="Shortlist within budget">Shortlist dentro do orçamento</b><small data-en="best average first, until budget minus a 10% reserve">maior média primeiro, até o orçamento menos 10% de reserva</small><span class="fc-tool">n8n</span></li>
+        <li class="fc-edge"><span data-en="19 creators · US$13.5K">19 creators · US$ 13,5 mil</span></li>
+        <li class="fc-node"><b data-en="Deal + rationale note">Deal + nota com os motivos</b><small data-en="stage Lead, one reason per pick">estágio Lead, um motivo por escolha</small><span class="fc-tool">Attio</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node is-human"><b data-en="I approve">Eu aprovo</b><small>Lead → In Progress</small><span class="fc-tool" data-en="Me">Eu</span></li>
       </ol>
       <div class="cards">
-        <div class="card"><b data-en="Key metric">Métrica principal</b><p data-en="Minutes from the brief arriving to an approved shortlist.">Minutos entre a chegada do brief e a shortlist aprovada.</p></div>
-        <div class="card"><b data-en="Weekly pipeline">Pipeline semanal</b><p data-en="LinkedIn (via Clay), YouTube and newsletters, prioritizing niches with thin supply. Funnel: found → approved → contacted → replied.">LinkedIn (pelo Clay), YouTube e newsletters, priorizando nichos com pouca oferta. Funil: encontrados → aprovados → contatados → responderam.</p></div>
-        <div class="card"><b data-en="Talking to creators">Conversa com creators</b><p data-en="5 to 8 conversations, in my own name, about how they close sponsorships today. Real insight, without speaking for Passionfroot.">De 5 a 8 conversas, no meu nome, sobre como fecham publis hoje. Insight de verdade, sem falar em nome da Passionfroot.</p></div>
+        <div class="card"><b data-en="Real run">Rodada real</b><strong data-en="19 creators">19 creators</strong><p data-en="The stage 1 ElevenLabs brief, run with a US$15K budget instead of US$13.6K: 297 matches scored by both models, 19 picked for US$13.5K, in 2 min 49 s, with no manual step between the form and the deal.">O mesmo brief da ElevenLabs da etapa 1, rodado com US<p data-en="The ElevenLabs voice-agent brief, US$15K: 297 matches scored by both models, 19 picked for US$13.5K, with no manual step between the form and the deal.">O brief de agentes de voz da ElevenLabs, US$&nbsp;15 mil: 297 candidatos avaliados pelos dois modelos, 19 escolhidos por US$&nbsp;13,5 mil, em 2 min 49 s, sem passo manual entre o formulário e o deal.</p>nbsp;15 mil em vez de US<p data-en="The ElevenLabs voice-agent brief, US$15K: 297 matches scored by both models, 19 picked for US$13.5K, with no manual step between the form and the deal.">O brief de agentes de voz da ElevenLabs, US$&nbsp;15 mil: 297 candidatos avaliados pelos dois modelos, 19 escolhidos por US$&nbsp;13,5 mil, sem passo manual entre o formulário e o deal.</p>nbsp;13,6 mil: 297 candidatos avaliados pelos dois modelos, 19 escolhidos por US<p data-en="The ElevenLabs voice-agent brief, US$15K: 297 matches scored by both models, 19 picked for US$13.5K, with no manual step between the form and the deal.">O brief de agentes de voz da ElevenLabs, US$&nbsp;15 mil: 297 candidatos avaliados pelos dois modelos, 19 escolhidos por US$&nbsp;13,5 mil, sem passo manual entre o formulário e o deal.</p>nbsp;13,5 mil, sem passo manual entre o formulário e o deal.</p></div>
+        <div class="card"><b data-en="Matches my hand-made list">Bate com a lista feita à mão</b><strong>7 / 15</strong><p data-en="Seven of the 15 creators I picked by hand in stage 1 came back on their own, plus one of my reserves. Jev and Claude never split by 4 points or more.">Sete dos 15 creators que eu escolhi à mão na etapa 1 voltaram sozinhos, mais uma das minhas reservas. Jev e Claude nunca divergiram em 4 pontos ou mais.</p></div>
+        <div class="card"><b data-en="Why score every match">Por que avaliar todos</b><strong>4 / 19</strong><p data-en="Four picks sat between positions 152 and 196 by vetting score. An earlier version scored only the top 150 against the brief and never saw them.">Quatro escolhidos estavam entre as posições 152 e 196 da nota de vetting. Uma versão anterior só avaliava os 150 primeiros contra o brief e nem os via.</p></div>
       </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-s2-b" aria-labelledby="t-s2-b" hidden>
+      <div class="panel-note"><span data-en="Workflow 3, 33 nodes, every Monday. It looks for the Passionfroot categories with the fewest approved creators and fills them, with the same rubric and double vetting as stage 1.">Workflow 3, 33 nós, toda segunda. Procura as categorias da Passionfroot com menos aprovados e preenche, com a mesma rubrica e o mesmo duplo vetting da etapa 1.</span></div>
+      <ol class="fc" aria-label="Stage B, workflow 3: weekly trigger, thinnest categories, YouTube and Substack searches, cheap filters, blind double vetting, three outcomes, Clay enrich on a paid plan, ready for outreach">
+        <li class="fc-node"><b data-en="Every Monday, 9 am">Toda segunda, 9h</b><span class="fc-tool">n8n</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node"><b data-en="Count approved creators per category">Conta aprovados por categoria</b><small data-en="the gap map, live">o mapa de gaps, ao vivo</small><span class="fc-tool">Attio</span></li>
+        <li class="fc-edge"><span data-en="3 thinnest categories · searches rotate weekly">3 categorias mais finas · buscas mudam toda semana</span></li>
+        <li class="fc-split">
+          <div class="fc-out"><div class="fc-node"><b data-en="Video search">Busca de vídeos</b><small data-en="last 90 days, Brazil">últimos 90 dias, Brasil</small><span class="fc-tool">YouTube</span></div></div>
+          <div class="fc-out"><div class="fc-node is-off"><b data-en="Publication search">Busca de publicações</b><small data-en="403 from n8n Cloud (Cloudflare)">403 no n8n Cloud (Cloudflare)</small><span class="fc-tool">Substack</span></div></div>
+        </li>
+        <li class="fc-edge"><span data-en="only creators never vetted before">só quem nunca foi avaliado</span></li>
+        <li class="fc-node"><b data-en="Cheap filters">Filtros baratos</b><small data-en="size, country, posted in 30 days · up to 40 per run">porte, país, postou em 30 dias · até 40 por rodada</small><span class="fc-tool">n8n</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node"><b data-en="Blind double vetting">Duplo vetting às cegas</b><small data-en="the stage 1 rubric, rules A and B">a rubrica da etapa 1, regras A e B</small><span class="fc-tool">Jev · Claude</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node is-decision"><b data-en="Verdict?">Veredito?</b><span class="fc-tool">n8n</span></li>
+        <li class="fc-split">
+          <div class="fc-out"><span class="fc-edge" data-en="both approve">os dois aprovam</span><div class="fc-node"><b>Vetted</b><span class="fc-tool">Attio</span></div></div>
+          <div class="fc-out"><span class="fc-edge" data-en="split">disputa</span><div class="fc-node is-human"><b data-en="Review task for me">Task de revisão para mim</b><small>Sourced</small><span class="fc-tool">Attio</span></div></div>
+          <div class="fc-out"><span class="fc-edge" data-en="rejected">reprovado</span><div class="fc-node"><b data-en="Remembered, not stored">Lembrado, não gravado</b><span class="fc-tool">n8n</span></div></div>
+        </li>
+        <li class="fc-edge"><span data-en="approved">aprovados</span></li>
+        <li class="fc-node is-off"><b data-en="Enrich: LinkedIn, role, business email">Enrich: LinkedIn, cargo, e-mail comercial</b><small data-en="paid plan · the node is in place, disabled">plano pago · o nó está no lugar, desligado</small><span class="fc-tool">Clay</span></li>
+        <li class="fc-edge"><span data-en="has a contact route">tem caminho de contato</span></li>
+        <li class="fc-node"><b>Ready for outreach</b><small data-en="starts workflow 2">dispara o workflow 2</small><span class="fc-tool">Attio</span></li>
+      </ol>
+      <div class="cards">
+        <div class="card"><b data-en="Two real runs">Duas rodadas reais</b><strong data-en="47 vetted">47 avaliados</strong><p data-en="Zero failed evaluations. 19 approved, 2 split verdicts turned into review tasks, 26 rejected. The last weekly run took 17 seconds.">Nenhuma avaliação com erro. 19 aprovados, 2 disputas viraram tasks de revisão, 26 reprovados. A última rodada semanal levou 17 segundos.</p></div>
+        <div class="card"><b data-en="Searching where the gap is">Buscando onde está o gap</b><strong>3/16 → 3/3</strong><p data-en="Run 1: only 3 of 16 approved were B2B; most were exam-prep students. I moved the searches to a professional angle. Run 2: 3 of 3.">Rodada 1: só 3 de 16 aprovados eram B2B; a maioria era de estudantes de ENEM e concurso. Mudei as buscas para um ângulo profissional. Rodada 2: 3 de 3.</p></div>
+        <div class="card"><b data-en="The creator gate earns its keep">O portão de creator paga a conta</b><p data-en="It rejected companies and institutions with strong professional audiences: health-and-safety software makers, a Notion consultancy, a TV network, universities, the bar association.">Barrou empresas e instituições com público profissional forte: softwares de segurança do trabalho, uma consultoria de Notion, uma rede de TV, universidades, a OAB.</p></div>
+        <div class="card"><b data-en="A human still decides">Um humano ainda decide</b><p data-en="One split verdict, creator or company, turned out to be random clips with an AI voice-over: a scam. I rejected it from the review task in Attio.">Uma disputa, creator ou empresa, era um canal de vídeos aleatórios com voz de IA: um golpe. Eu rejeitei pela task de revisão no Attio.</p></div>
+        <div class="card"><b data-en="Clay, on a paid plan">Clay, num plano pago</b><p data-en="Enrichment sits between Vetted and Ready: Clay finds the LinkedIn, role and a business email and writes back to Attio. The node is in place, disabled on the free plan.">O enrich fica entre Vetted e Ready: a Clay acha LinkedIn, cargo e um e-mail comercial e grava no Attio. O nó está no lugar, desligado no plano gratuito.</p></div>
+        <div class="card"><b>Substack</b><p data-en="The branch is built, but Substack answers n8n Cloud with a Cloudflare challenge (HTTP 403). The run summary shows it; newsletters come from local scripts with the same rubric.">O ramo está montado, mas o Substack responde ao n8n Cloud com o desafio do Cloudflare (HTTP 403). O resumo da rodada mostra isso; as newsletters vêm de scripts locais com a mesma rubrica.</p></div>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-s2-out" aria-labelledby="t-s2-out" hidden>
+      <div class="panel-note"><span data-en="Workflow 2: when a creator reaches “Ready for outreach” in Attio, a webhook sends them to Apollo and the outreach sequence, then marks them Contacted. Built and imported, never activated: no mailbox is connected, so nothing can be sent.">Workflow 2: quando um creator chega em “Ready for outreach” no Attio, um webhook leva ele para o Apollo e para a sequência de outreach, e marca como Contacted. Montado e importado, nunca ativado: não há caixa de e-mail conectada, então nada pode ser enviado.</span></div>
+      <ol class="fc" aria-label="Stage B, workflow 2: Attio stage change, webhook, ready for outreach check, Apollo contact, sequence, contacted">
+        <li class="fc-node"><b data-en="Stage changes">Estágio muda</b><small data-en="Supply pipeline list">lista Supply pipeline</small><span class="fc-tool">Attio</span></li>
+        <li class="fc-edge"><span data-en="webhook event">evento de webhook</span></li>
+        <li class="fc-node is-decision"><b data-en="Now “Ready for outreach”?">Agora é “Ready for outreach”?</b><small data-en="any other stage is ignored">qualquer outro estágio é ignorado</small><span class="fc-tool">n8n</span></li>
+        <li class="fc-edge"><span data-en="yes">sim</span></li>
+        <li class="fc-node"><b data-en="Create the contact">Cria o contato</b><small data-en="deduplicated; vetting fields come from Attio">sem duplicar; campos do vetting vêm do Attio</small><span class="fc-tool">Apollo</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node is-off"><b data-en="Enroll in the sequence">Entra na sequência</b><small data-en="inactive template, no mailbox: nothing is sent">modelo inativo, sem caixa de e-mail: nada é enviado</small><span class="fc-tool">Apollo</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node"><b>Contacted</b><span class="fc-tool">Attio</span></li>
+      </ol>
+      <div class="cards">
+        <div class="card"><b data-en="Attio is the system of record">O Attio é a fonte da verdade</b><strong>661</strong><p data-en="creators in the supply pipeline: 538 vetted, 120 waiting on a split verdict, 2 ready for outreach. Every stage change is an event n8n can act on.">creators no pipeline de supply: 538 aprovados, 120 esperando decisão de disputa, 2 prontos para outreach. Toda mudança de estágio é um evento que o n8n pode usar.</p></div>
+        <div class="card"><b data-en="Why n8n makes the calls">Por que o n8n faz as chamadas</b><p data-en="Clay’s free plan has no webhook trigger and its code steps can’t reach the network, so every call to Jev, Claude, Attio, Apollo and YouTube runs in n8n.">O plano gratuito da Clay não tem trigger de webhook e o código dela não acessa a rede, então toda chamada ao Jev, Claude, Attio, Apollo e YouTube roda no n8n.</p></div>
+        <div class="card"><b data-en="Keys stay out">Chaves ficam de fora</b><p data-en="The workflows are generated by a script and imported as JSON. API keys live only in n8n credentials, never in the files.">Os workflows saem de um script e são importados em JSON. As chaves de API ficam só nas credenciais do n8n, nunca nos arquivos.</p></div>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-s2-fix" aria-labelledby="t-s2-fix" hidden>
+      <div class="panel-note"><span data-en="Every run surfaced something. Each fix is in the workflows now.">Cada rodada mostrou alguma coisa. Cada correção já está nos workflows.</span></div>
+      <ul class="checks">
+        <li data-en="The first brief spent US$5K of US$13.6K: the model chose how many creators to pick. Now the budget decides.">O primeiro brief gastou US$&nbsp;5 mil de US$&nbsp;13,6 mil: o modelo escolhia quantos creators pegar. Agora quem decide é o orçamento.</li>
+        <li data-en="The first ranking used the vetting score, which measures quality, not fit with the brief. Now both models score against the brief.">O primeiro ranking usava a nota do vetting, que mede qualidade, não aderência ao brief. Agora os dois modelos dão nota contra o brief.</li>
+        <li data-en="Only the top 150 matches were scored against the brief. Four of the final 19 sat below that line.">Só os 150 primeiros eram avaliados contra o brief. Quatro dos 19 finais estavam abaixo dessa linha.</li>
+        <li data-en="A wrong Jev credential failed quietly and the ranking ran on Claude alone. Summaries now say how many creators each model scored.">Uma credencial errada do Jev falhou em silêncio e o ranking rodou só com o Claude. Agora os resumos dizem quantos creators cada modelo avaliou.</li>
+        <li data-en="When nothing was approved, the weekly run stopped without a word. It now always ends with a summary of every creator and every error.">Quando nada era aprovado, a rodada semanal parava sem avisar. Agora sempre termina com um resumo de cada creator e de cada erro.</li>
+        <li data-en="Manual runs don’t save n8n’s memory, so a rejected channel was vetted twice. Creators already in Attio now count as seen: 0 duplicates in 661.">Rodadas manuais não salvam a memória do n8n, então um canal reprovado foi avaliado duas vezes. Agora quem já está no Attio conta como visto: 0 duplicados em 661.</li>
+      </ul>
     </div>
   </section>
 
-  <!-- CLAY -->
-  <section id="clay">
+  <!-- GAPS:START (gerado por scripts/case_figures.mjs no projeto Clay; não editar à mão) -->
+  <section id="gaps">
     <div class="sec-head">
-      <span class="eyebrow" data-en="Clay · Free plan">Clay · Plano gratuito</span>
-      <h2 class="display" data-en="What fit in&lt;br&gt;the free plan">O que coube<br>no plano gratuito</h2>
-      <p class="serif" data-en="I built this case without spending money. In Clay, that meant one LinkedIn search and one niche. Below is what I ran, and the flow I would run with credits.">Fiz este case sem gastar dinheiro. Na Clay, isso limitou o LinkedIn a uma busca e a um nicho. Abaixo está o que rodei e o fluxo que eu rodaria com créditos.</p>
+      <span class="eyebrow" data-en="Where supply is thin">Onde falta supply</span>
+      <h2 class="display" data-en="The gap&lt;br&gt;map">O mapa<br>de gaps</h2>
+      <p class="serif" data-en="Approved creators by Passionfroot category, live from Attio (661 creators in the pipeline). A B2B audience means a fit of 3.5 or more on the rubric.">Creators aprovados por categoria da Passionfroot, ao vivo do Attio (661 creators no pipeline). Público B2B quer dizer fit de 3,5 ou mais na rubrica.</p>
     </div>
-    <div class="panel">
-      <div class="panel-note"><span data-en="What I ran: one batch, end to end. Since “Top Voice” and HR terms dominated the search, 7 of the 10 approved creators are in HR. The other niches were left for a paid plan.">O que rodei: um lote, de ponta a ponta. Como “Top Voice” e os termos de RH dominaram a busca, 7 dos 10 aprovados são de RH. Os outros nichos ficaram para um plano pago.</span></div>
-      <ol class="flow">
-        <li data-en="People search in Clay · Brazil, 10k+ followers, creator signals (Top Voice, newsletter) and niche terms">Busca de pessoas na Clay · Brasil, 10 mil+ seguidores, sinais de creator (Top Voice, newsletter) e termos de nicho</li>
-        <li data-en="50 profiles · half of the monthly search quota">50 perfis · metade da quota mensal de busca</li>
-        <li data-en="Workflow 1: profile enrichment · headline, about, followers, current roles">Workflow 1: enrich do perfil · headline, sobre, seguidores, cargos atuais</li>
-        <li data-en="Jev screens the profile only · decides who is worth reading posts for">Triagem do Jev só pelo perfil · decide quem vale a leitura dos posts</li>
-        <li data-en="Workflow 2: latest posts for 13 profiles · the most expensive step">Workflow 2: últimos posts de 13 perfis · a etapa mais cara</li>
-        <li data-en="Double vetting, Jev + Claude · 10 approved">Duplo vetting Jev + Claude · 10 aprovados</li>
-        <li data-en="Apollo list · emails stay inside Apollo, never on this page">Lista no Apollo · e-mails ficam dentro do Apollo, nunca nesta página</li>
+    <figure class="gp">
+      <div class="gp-legend"><span><i class="gp-sw is-b2b"></i><span data-en="B2B audience (fit ≥ 3.5)">Público B2B (fit ≥ 3,5)</span></span><span><i class="gp-sw is-pro"></i><span data-en="Students and early career">Estudantes e início de carreira</span></span></div>
+      <div class="gp-rows" role="list" aria-label="Approved creators by category">
+        <div class="gp-row" role="listitem"><span class="gp-label">Tech &amp; Business</span><div class="gp-track"><span class="gp-seg is-b2b" style="width:82.04%" tabindex="0" data-tip="Tech &amp; Business · B2B audience: 137" aria-label="Tech &amp; Business, B2B audience: 137"></span><span class="gp-seg is-pro" style="width:17.96%" tabindex="0" data-tip="Tech &amp; Business · students and early career: 30" aria-label="Tech &amp; Business, students and early career: 30"></span></div><span class="gp-val">167</span></div>
+        <div class="gp-row" role="listitem"><span class="gp-label">Marketing &amp; Design</span><div class="gp-track"><span class="gp-seg is-b2b" style="width:52.69%" tabindex="0" data-tip="Marketing &amp; Design · B2B audience: 88" aria-label="Marketing &amp; Design, B2B audience: 88"></span><span class="gp-seg is-pro" style="width:2.99%" tabindex="0" data-tip="Marketing &amp; Design · students and early career: 5" aria-label="Marketing &amp; Design, students and early career: 5"></span></div><span class="gp-val">93</span></div>
+        <div class="gp-row" role="listitem"><span class="gp-label">AI</span><div class="gp-track"><span class="gp-seg is-b2b" style="width:44.31%" tabindex="0" data-tip="AI · B2B audience: 74" aria-label="AI, B2B audience: 74"></span><span class="gp-seg is-pro" style="width:10.78%" tabindex="0" data-tip="AI · students and early career: 18" aria-label="AI, students and early career: 18"></span></div><span class="gp-val">92</span></div>
+        <div class="gp-row" role="listitem"><span class="gp-label">Finance &amp; Investing</span><div class="gp-track"><span class="gp-seg is-b2b" style="width:15.57%" tabindex="0" data-tip="Finance &amp; Investing · B2B audience: 26" aria-label="Finance &amp; Investing, B2B audience: 26"></span><span class="gp-seg is-pro" style="width:15.57%" tabindex="0" data-tip="Finance &amp; Investing · students and early career: 26" aria-label="Finance &amp; Investing, students and early career: 26"></span></div><span class="gp-val">52</span></div>
+        <div class="gp-row" role="listitem"><span class="gp-label">Career</span><div class="gp-track"><span class="gp-seg is-b2b" style="width:19.16%" tabindex="0" data-tip="Career · B2B audience: 32" aria-label="Career, B2B audience: 32"></span><span class="gp-seg is-pro" style="width:11.98%" tabindex="0" data-tip="Career · students and early career: 20" aria-label="Career, students and early career: 20"></span></div><span class="gp-val">52</span></div>
+        <div class="gp-row" role="listitem"><span class="gp-label">Productivity &amp; Personal Development</span><div class="gp-track"><span class="gp-seg is-b2b" style="width:0.60%" tabindex="0" data-tip="Productivity &amp; Personal Development · B2B audience: 1" aria-label="Productivity &amp; Personal Development, B2B audience: 1"></span><span class="gp-seg is-pro" style="width:19.76%" tabindex="0" data-tip="Productivity &amp; Personal Development · students and early career: 33" aria-label="Productivity &amp; Personal Development, students and early career: 33"></span></div><span class="gp-val">34</span></div>
+        <div class="gp-row" role="listitem"><span class="gp-label">Other</span><div class="gp-track"><span class="gp-seg is-b2b" style="width:12.57%" tabindex="0" data-tip="Other · B2B audience: 21" aria-label="Other, B2B audience: 21"></span><span class="gp-seg is-pro" style="width:7.19%" tabindex="0" data-tip="Other · students and early career: 12" aria-label="Other, students and early career: 12"></span></div><span class="gp-val">33</span></div>
+        <div class="gp-row" role="listitem"><span class="gp-label">Health</span><div class="gp-track"><span class="gp-seg is-b2b" style="width:5.99%" tabindex="0" data-tip="Health · B2B audience: 10" aria-label="Health, B2B audience: 10"></span><span class="gp-seg is-pro" style="width:4.19%" tabindex="0" data-tip="Health · students and early career: 7" aria-label="Health, students and early career: 7"></span></div><span class="gp-val">17</span></div>
+      </div>
+      <figcaption data-en="Productivity has 34 approved creators, but only 1 with a B2B audience. Health has 17; Tech &amp; Business, 167. The weekly workflow searches the thinnest categories first.">Produtividade tem 34 creators aprovados, mas só 1 com público B2B. Health tem 17; Tech &amp; Business, 167. O workflow semanal busca primeiro nas categorias mais finas.</figcaption>
+      <details class="gp-table"><summary data-en="Table view">Ver em tabela</summary>
+        <table class="tl-table"><tr><th>Category</th><th>Approved</th><th>B2B audience</th><th>Students and early career</th></tr>
+        <tr><td>Tech &amp; Business</td><td>167</td><td>137</td><td>30</td></tr><tr><td>Marketing &amp; Design</td><td>93</td><td>88</td><td>5</td></tr><tr><td>AI</td><td>92</td><td>74</td><td>18</td></tr><tr><td>Finance &amp; Investing</td><td>52</td><td>26</td><td>26</td></tr><tr><td>Career</td><td>52</td><td>32</td><td>20</td></tr><tr><td>Productivity &amp; Personal Development</td><td>34</td><td>1</td><td>33</td></tr><tr><td>Other</td><td>33</td><td>21</td><td>12</td></tr><tr><td>Health</td><td>17</td><td>10</td><td>7</td></tr></table>
+      </details>
+    </figure>
+  </section>
+  <!-- GAPS:END -->
+
+  <!-- TOOLS:START (gerado por scripts/case_figures.mjs no projeto Clay; não editar à mão) -->
+  <section id="tools">
+    <div class="sec-head">
+      <span class="eyebrow" data-en="Under the hood">Por dentro</span>
+      <h2 class="display" data-en="In the&lt;br&gt;tools">Nas<br>ferramentas</h2>
+      <p class="serif" data-en="What each tool actually holds, drawn from the real configuration: the n8n workflow files, the Clay workflow read through its CLI, and the Apollo and Attio APIs. Snapshot from Oct 23, 2026.">O que cada ferramenta tem de verdade, desenhado da configuração real: os arquivos dos workflows do n8n, o workflow da Clay lido pela CLI e as APIs do Apollo e do Attio. Retrato de 23 de out. de 2026.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Ferramentas" data-en-label="Tools">
+      <button role="tab" id="t-tl-w1" aria-controls="p-tl-w1" aria-selected="true">n8n · W1 brief</button>
+      <button role="tab" id="t-tl-w3" aria-controls="p-tl-w3" aria-selected="false">n8n · W3 weekly</button>
+      <button role="tab" id="t-tl-w2" aria-controls="p-tl-w2" aria-selected="false">n8n · W2 outreach</button>
+      <button role="tab" id="t-tl-clay" aria-controls="p-tl-clay" aria-selected="false">Clay</button>
+      <button role="tab" id="t-tl-apollo" aria-controls="p-tl-apollo" aria-selected="false">Apollo</button>
+      <button role="tab" id="t-tl-attio" aria-controls="p-tl-attio" aria-selected="false">Attio</button>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-tl-w1" aria-labelledby="t-tl-w1">
+      <div class="panel-note"><span data-en="Workflow 1, stage A: the 15 nodes as they sit in n8n. A form starts it; the summary at the end is what the campaign manager sees.">Workflow 1, etapa A: os 15 nós como ficam no n8n. Um formulário dispara; o resumo no fim é o que o campaign manager vê.</span></div>
+      <figure class="tl-shot"><a href="creators-img/n8n-w1.png" target="_blank" rel="noopener"><img src="creators-img/n8n-w1.png" alt="Creator Supply Engine · Brief → shortlist in the n8n editor: Brand brief, Apollo · company data, Build criteria request, Claude · brief → criteria, Criteria → Attio query, Attio · query vetted supply, Build ranking request, Claude · rank against brief, Build Jev requests, Jev · brief fit, Shortlist within budget, Attio · create brief deal, Build rationale note, Attio · attach rationale, Summary" loading="lazy"></a><figcaption data-en="Screenshot from the n8n editor. Click to enlarge.">Print do editor do n8n. Clique para ampliar.</figcaption></figure>
+      
+      <a class="jump" href="creators-n8n/w1_brief_shortlist.json" download data-en="Download the workflow JSON (import it into n8n) ↓">Baixar o JSON do workflow (importa no n8n) ↓</a>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-tl-w3" aria-labelledby="t-tl-w3" hidden>
+      <div class="panel-note"><span data-en="Workflow 3, stage B: 33 nodes and 3 notes. A schedule starts it every Monday; the Clay node is disabled on the free plan.">Workflow 3, etapa B: 33 nós e 3 notas. Um agendamento dispara toda segunda; o nó da Clay fica desligado no plano gratuito.</span></div>
+      <figure class="tl-shot"><a href="creators-img/n8n-w3.png" target="_blank" rel="noopener"><img src="creators-img/n8n-w3.png" alt="Creator Supply Engine · Stage B · Weekly sourcing + double vetting in the n8n editor: Every Monday, Categories, Attio · approved per category, Plan searches, YouTube searches, YouTube · search, New channels, YouTube · channels, Cheap filter, YouTube · last uploads, Video ids, YouTube · video stats, YouTube candidates, Substack searches, Substack · search, New publications, Substack · author profile, Subscriber filter, Substack · recent posts, All new creators, Jev · rubric, Claude · rubric, Compare Jev × Claude, Anything to store?, Attio · create creator, Pipeline entry, Attio · add to pipeline, Clay · enrich (paid plan), Contact route, Attio · ready for outreach, Review tasks, Attio · review task, Run summary" loading="lazy"></a><figcaption data-en="Screenshot from the n8n editor. Click to enlarge.">Print do editor do n8n. Clique para ampliar.</figcaption></figure>
+      <div class="cards"><div class="card"><b>Stage B · weekly supply</b><p>Runs every Monday. Finds the Passionfroot categories with the fewest approved creators in Attio, searches YouTube and Substack for new Brazilian creators there, and vets each one twice, blind: Jev and Claude with the same rubric. - Both approve → Vetted in Attio - They disagree on a gate or by 2+ points on fit or quality → Sourced, verdict Dispute, for a human call - Approved with a contact route → Ready for outreach, which starts the outreach workflow Creators vetted before are skipped (the batches already run, plus the workflow's memory).</p></div><div class="card"><b>Clay, on a paid plan</b><p>Enrich: Clay's webhook source receives each approved creator, finds their LinkedIn, role, company and a business email (waterfall), and writes back to Attio through its HTTP action. The node below is disabled because Clay's free plan has no webhook source. LinkedIn sourcing: Clay's people search (Brazil, 10k+ followers, creator signals) runs through the Clay CLI today. On a paid plan, a Clay table would post each profile to a webhook here and join the same double vetting.</p></div><div class="card"><b>Why the Substack branch comes back empty</b><p>Substack answers n8n Cloud with a Cloudflare challenge (HTTP 403, &quot;Just a moment...&quot;): it blocks requests from cloud servers. The same searches work from a home connection. The branch stays here because newsletters are part of the supply: same thin-category searches, same subscriber floor, same double vetting as YouTube. The run summary shows the status code of every Substack search, so the block is visible instead of silent. Until n8n runs from a network Substack accepts, newsletters come from local scripts with the same rubric and land in the same Attio pipeline.</p></div></div>
+      <a class="jump" href="creators-n8n/w3_weekly_supply.json" download data-en="Download the workflow JSON (import it into n8n) ↓">Baixar o JSON do workflow (importa no n8n) ↓</a>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-tl-w2" aria-labelledby="t-tl-w2" hidden>
+      <div class="panel-note"><span data-en="Workflow 2, stage B: an Attio webhook starts it. Imported, never activated.">Workflow 2, etapa B: um webhook do Attio dispara. Importado, nunca ativado.</span></div>
+      <figure class="tl-shot"><a href="creators-img/n8n-w2.png" target="_blank" rel="noopener"><img src="creators-img/n8n-w2.png" alt="Creator Supply Engine · Stage B · Attio → Apollo outreach (demo only) in the n8n editor: Attio · stage changed, List entry events, Attio · get entry, Ready for outreach?, Attio · get creator, Apollo · upsert contact, Apollo · add to sequence, Attio · mark Contacted" loading="lazy"></a><figcaption data-en="Screenshot from the n8n editor. Click to enlarge.">Print do editor do n8n. Clique para ampliar.</figcaption></figure>
+      
+      <a class="jump" href="creators-n8n/w2_outreach_sync.json" download data-en="Download the workflow JSON (import it into n8n) ↓">Baixar o JSON do workflow (importa no n8n) ↓</a>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-tl-clay" aria-labelledby="t-tl-clay" hidden>
+      <div class="panel-note"><span data-en="“Creator Supply Engine — LinkedIn pipeline”, read from Clay through its CLI. A CSV of LinkedIn URLs starts one run per row.">“Creator Supply Engine — LinkedIn pipeline”, lido da Clay pela CLI. Um CSV de URLs do LinkedIn dispara uma rodada por linha.</span></div>
+      <div class="cv-scroll"><svg class="cv" viewBox="0 0 872 112" width="872" role="img" aria-label="Creator Supply Engine — LinkedIn pipeline: CSV upload, then Enrich LinkedIn profile, then Brazil only, 5k+ followers, then Get recent LinkedIn posts"><defs><marker id="seta-clay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="cv-head"/></marker></defs><path d="M224 56 H230" class="cv-edge" marker-end="url(#seta-clay)"/><path d="M432 56 H438" class="cv-edge" marker-end="url(#seta-clay)"/><path d="M640 56 H646" class="cv-edge" marker-end="url(#seta-clay)"/><g><rect x="24" y="24" width="200" height="64" rx="10" class="cv-node is-trigger"/><text x="36" y="43" class="cv-kind">Trigger · CSV upload</text><text x="36" y="62" class="cv-name">CSV upload</text></g><g><rect x="232" y="24" width="200" height="64" rx="10" class="cv-node"/><text x="244" y="43" class="cv-kind">Clay action</text><text x="244" y="62" class="cv-name">Enrich LinkedIn profile</text></g><g><rect x="440" y="24" width="200" height="64" rx="10" class="cv-node"/><text x="452" y="43" class="cv-kind">Conditional · rules</text><text x="452" y="62" class="cv-name">Brazil only, 5k+</text><text x="452" y="77" class="cv-name">followers</text></g><g><rect x="648" y="24" width="200" height="64" rx="10" class="cv-node"/><text x="660" y="43" class="cv-kind">Clay action</text><text x="660" y="62" class="cv-name">Get recent LinkedIn</text><text x="660" y="77" class="cv-name">posts</text></g></svg></div>
+      <div class="cards"><div class="card"><b>Enrich LinkedIn profile</b><p>Public profile: headline, about, followers, country and current roles. 0.5 credit.</p></div><div class="card"><b>Brazil only, 5k+ followers</b><p>Cheap screen before the expensive step: only read posts from people in Brazil with 5k+ followers.</p></div><div class="card"><b>Get recent LinkedIn posts</b><p>Last 3 posts, to measure engagement and consistency. About 3.5 credits.</p></div></div>
+      <p class="tl-code"><span data-en="Rule in the conditional node:">Regra do nó condicional:</span> followers ≥ 5000 AND (country = Brazil OR location contains Brazil OR location contains São Paulo) · no match ends the run</p>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-tl-apollo" aria-labelledby="t-tl-apollo" hidden>
+      <div class="panel-note"><span class="tag">Inactive</span><span class="tag">0 contacts</span><span class="tag">No mailbox</span><span data-en="“[TEMPLATE — do not send] Passionfroot · B2B creator recruiting”, read from the Apollo API. Written as if I worked at Passionfroot; never sent.">“[TEMPLATE — do not send] Passionfroot · B2B creator recruiting”, lido pela API do Apollo. Escrito como se eu trabalhasse na Passionfroot; nunca enviado.</span></div>
+      <ol class="fc" aria-label="Apollo sequence, 7 steps over 13 days">
+        <li class="fc-node"><b>Day 0 · View profile</b><small>View the profile and react to a recent post before connecting, so the creator sees who is reaching out.</small><span class="fc-tool">LinkedIn</span></li>
+        <li class="fc-edge"><span>+1 day</span></li><li class="fc-node"><b>Day 1 · Connection request</b><small>Hi {{first_name}}! I work on creator partnerships at Passionfroot and follow your posts about [niche]. Happy to connect?</small><span class="fc-tool">LinkedIn</span></li>
+        <li class="fc-edge"><span>+1 day</span></li><li class="fc-node"><b>Day 2 · Automatic email</b><small>Subject: {{first_name}}, B2B brands looking for [niche] creators</small><span class="fc-tool">Email</span></li>
+        <li class="fc-edge"><span>+3 days</span></li><li class="fc-node"><b>Day 5 · Automatic email</b><small>Hi {{first_name}}, following up with what usually matters most to creators at your stage: • Less back-and-forth by email: rates and formats live in yo…</small><span class="fc-tool">Email</span></li>
+        <li class="fc-edge"><span>+2 days</span></li><li class="fc-node"><b>Day 7 · Message</b><small>Hi {{first_name}}! I sent you an email about B2B brands looking for [niche] creators. Happy to sort it out here if that's easier.</small><span class="fc-tool">LinkedIn</span></li>
+        <li class="fc-edge"><span>+4 days</span></li><li class="fc-node"><b>Day 11 · Automatic email</b><small>Hi {{first_name}}, this is my last email so I don't crowd your inbox. If you ever want offers from B2B brands without the tedious part of negotiating,…</small><span class="fc-tool">Email</span></li>
+        <li class="fc-edge"><span>+2 days</span></li><li class="fc-node"><b>Day 13 · Call</b><small>Only with a public business phone or one the creator shared (LGPD, Brazil's data protection law); otherwise skip. Goal: book a 15-minute onboarding. If they accept: move to &quot;Call&quot; in Attio. No reply at any step: &quot;Rejected&quot; with reason &quot;no reply&quot;, re-approach in 90 days.</small><span class="fc-tool">Phone</span></li>
       </ol>
+      <div class="tl-row"><b data-en="Custom contact fields, filled from Attio">Campos personalizados do contato, preenchidos pelo Attio</b><div class="tags"><span class="tag">Platform</span><span class="tag">Creator link</span><span class="tag">Passionfroot category</span><span class="tag">Estimated rate (US$)</span><span class="tag">Vetting score</span><span class="tag">Attio record ID</span></div></div>
     </div>
-    <div class="panel">
-      <div class="panel-note"><span data-en="With credits: the same logic, one search per niche, running every week.">Com créditos: a mesma lógica, uma busca por nicho, rodando toda semana.</span></div>
-      <ol class="flow">
-        <li data-en="One search per Passionfroot niche · marketing, product, sales, finance, data, HR, health, legal, founders">Uma busca por nicho da Passionfroot · marketing, produto, vendas, finanças, dados, RH, saúde, jurídico, founders</li>
-        <li data-en="Import approved YouTube and newsletter creators too · find each one’s LinkedIn">Importar também os aprovados do YouTube e das newsletters · achar o LinkedIn de cada um</li>
-        <li data-en="Profile enrichment + an engagement formula · reactions per thousand followers">Enrich do perfil + fórmula de engajamento · reações por mil seguidores</li>
-        <li data-en="Jev through Clay’s HTTP API column · gates, fit and category on every row">Jev pela coluna de HTTP API da Clay · portões, fit e categoria em toda linha</li>
-        <li data-en="Posts only for profiles that pass screening · a conditional column saves credits">Posts só para quem passa na triagem · coluna condicional economiza crédito</li>
-        <li data-en="Email waterfall only for approved creators · stored in Attio, never on a public page">Waterfall de e-mail só para aprovados · guardado no Attio, nunca em página pública</li>
-        <li data-en="Sent to Attio as “Vetted” · weekly run, deduplicated against past batches">Envio para o Attio como “Vetted” · roda toda semana, sem repetir quem já foi visto</li>
+
+    <div class="panel" role="tabpanel" id="p-tl-attio" aria-labelledby="t-tl-attio" hidden>
+      <div class="panel-note"><span data-en="The Supply pipeline list in Attio, 661 creators: Sourced 120, Vetted 538, Ready for outreach 2, Rejected 1.">A lista Supply pipeline no Attio, 661 creators: Sourced 120, Vetted 538, Ready for outreach 2, Rejected 1.</span></div>
+      <figure class="tl-shot"><a href="creators-img/attio-pipeline.png" target="_blank" rel="noopener"><img src="creators-img/attio-pipeline.png" alt="Attio Supply pipeline board: Sourced 120, Vetted 538, Ready for outreach 2, Contacted 0, Replied 0, Call 0, Signed up 0, Campaign-ready 0, Rejected 1" loading="lazy"></a><figcaption data-en="Screenshot of the board in Attio (click to enlarge). The record, deal and task below come from the Attio API.">Print do quadro no Attio (clique para ampliar). O registro, o deal e a task abaixo vêm da API do Attio.</figcaption></figure>
+      <div class="tl-grid">
+        <div class="card"><b data-en="A creator record">Um registro de creator</b><strong style="font-size:1.1rem">Arena Ambiental</strong><table class="tl-table"><tr><th>Platform</th><td>YouTube</td></tr><tr><th>Main link</th><td>https://www.youtube.com/@arenaambiental</td></tr><tr><th>Passionfroot category</th><td>Tech &amp; Business</td></tr><tr><th>Audience</th><td>74,900</td></tr><tr><th>Final score</th><td>82</td></tr><tr><th>Passionfroot fit</th><td>5</td></tr><tr><th>Verdict</th><td>Approved</td></tr><tr><th>Decided by</th><td>Jev + Claude agree</td></tr><tr><th>Rate card (US$)</th><td>500</td></tr><tr><th>Sourcing batch</th><td>w3_2026-10-23</td></tr><tr><th>Vetting rationale</th><td>Bruno Marchi runs a technical waste-management channel aimed at industry, agribusiness and business decision-makers. Recent videos are on-site interviews with companies like Grimaldi, Tecflex and Bianna Brasil at Eco Expo 2026, which show expert, sector-specif…</td></tr><tr><th>Content summary</th><td>Seja bem-vindo à Arena Ambiental! Seu canal técnico e direto sobre gestão ambiental. Aqui, com mais de 20 anos de experiência prática em gestão de resíduos no Brasil, África e Europa, eu, Bruno Marchi, trago discussões estratégicas para você sair do modo &quot;apag…</td></tr></table></div>
+        <div class="tl-stack">
+          <div class="card"><b data-en="A brief, as a deal">Um brief, como deal</b><strong style="font-size:1.1rem">Brief · Agent voice AI (elevenlabs)</strong><table class="tl-table">
+            <tr><th>Stage</th><td>Lead</td></tr><tr><th>Value</th><td>US$13,500</td></tr><tr><th>Budget (US$)</th><td>15,000</td></tr>
+            <tr><th>Target categories</th><td>AI, Tech &amp; Business, Marketing &amp; Design</td></tr><tr><th>Brief source</th><td>Hypothetical (case study)</td></tr><tr><th>People</th><td>19 creators</td></tr></table>
+            <p><b class="tl-mini">Note · Shortlist rationale</b><br>Ideal creator: A Brazilian creator who builds and teaches AI automations and agents (n8n, Make, WhatsApp API integrations) for customer service and sales, with an audience of developers, automation agency owners and small business operators. Content angle: A hands-on tutorial building an ElevenLabs voice agent that answers customer calls and qualifies sales leads, integrated with an existing WhatsApp support flow, sh…</p></div>
+          <div class="card"><b data-en="A review task, created by workflow 3">Uma task de revisão, criada pelo workflow 3</b><p>Decide: [creator] (YouTube) · different verdicts; red flag mismatch (Jev: politica; Claude: none). Open the record, check [channel link] and set Verdict to Approved (stage Vetted) or Rejected (stage Rejected, with a reason).</p><p class="tl-mini">Due 2026-10-26 · assigned to Michel</p></div>
+        </div>
+      </div>
+      <div class="tl-row"><b data-en="Attributes added to People">Atributos criados em People</b><div class="tags"><span class="tag">Creator ID</span><span class="tag">Platform</span><span class="tag">Main link</span><span class="tag">Passionfroot category</span><span class="tag">Audience</span><span class="tag">Final score</span><span class="tag">Passionfroot fit</span><span class="tag">Verdict</span><span class="tag">Decided by</span><span class="tag">Rate card (US$)</span><span class="tag">Vetting rationale</span><span class="tag">Dispute reason</span><span class="tag">Sourcing batch</span><span class="tag">Content summary</span></div></div>
+      <div class="tl-row"><b data-en="On Deals (briefs) and on the pipeline list">Em Deals (briefs) e na lista do pipeline</b><div class="tags"><span class="tag">Product</span><span class="tag">Budget (US$)</span><span class="tag">Target categories</span><span class="tag">Brief source</span><span class="tag">Stage</span><span class="tag">Rejection reason</span></div></div>
+    </div>
+    <dialog class="tl-zoom" aria-label="Screenshot, full size">
+      <button type="button" class="tl-zoom-close" aria-label="Close">×</button>
+      <div class="tl-zoom-body"><img alt=""></div>
+    </dialog>
+    <script>
+    /* Clique para ampliar: o print abre por cima da página no tamanho original, com rolagem; Esc, clique fora ou × fecham.
+       Sem JavaScript, o link abre a imagem numa aba nova. */
+    (function(){
+      var d = document.querySelector(".tl-zoom");
+      if (!d || !d.showModal) return;
+      var img = d.querySelector("img");
+      document.querySelectorAll(".tl-shot a").forEach(function(a){
+        a.addEventListener("click", function(e){
+          e.preventDefault();
+          var src = a.querySelector("img");
+          img.src = a.href; img.alt = src.alt;
+          d.showModal();
+        });
+      });
+      d.querySelector(".tl-zoom-close").addEventListener("click", function(){ d.close(); });
+      d.addEventListener("click", function(e){ if (e.target === d) d.close(); });
+    })();
+    </script>
+  </section>
+  <!-- TOOLS:END -->
+
+  <!-- PLAYBOOK -->
+  <section id="playbook">
+    <div class="sec-head">
+      <span class="eyebrow" data-en="How I’d run the role">Como eu faria o cargo</span>
+      <h2 class="display" data-en="The&lt;br&gt;playbook">O<br>playbook</h2>
+      <p class="serif" data-en="No creator was contacted for this case. This is what I look for, what I would ask, and the outreach I would run as part of the team.">Nenhum creator foi contatado neste case. Aqui está o que eu busco, o que eu perguntaria e o outreach que eu rodaria fazendo parte do time.</p>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Partes do playbook" data-en-label="Playbook sections">
+      <button role="tab" id="t-pb-look" aria-controls="p-pb-look" aria-selected="true" data-en="What I look for">O que eu busco</button>
+      <button role="tab" id="t-pb-call" aria-controls="p-pb-call" aria-selected="false" data-en="Onboarding call">Call de onboarding</button>
+      <button role="tab" id="t-pb-out" aria-controls="p-pb-out" aria-selected="false">Outreach</button>
+      <button role="tab" id="t-pb-pipe" aria-controls="p-pb-pipe" aria-selected="false">Pipeline</button>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-pb-look" aria-labelledby="t-pb-look">
+      <div class="panel-note"><span data-en="The same rubric Jev and Claude use, in plain words.">A mesma rubrica que o Jev e o Claude usam, em palavras simples.</span></div>
+      <div class="cards">
+        <div class="card"><b data-en="Gates">Portões</b><p data-en="Posts in Portuguese, is a person (not a company, school or news outlet), posted in the last 30 days. No betting, get-rich-quick, speculative trading or party politics.">Publica em português, é uma pessoa (não empresa, escola ou veículo), postou nos últimos 30 dias. Sem apostas, dinheiro fácil, trading especulativo ou política partidária.</p></div>
+        <div class="card"><b data-en="Who is listening">Quem está ouvindo</b><p data-en="The question behind the fit score: would a B2B brand pay to reach this audience? From 1 (entertainment) to 5 (people who decide on buying software and services). Below 2.5 is out, however good the engagement.">A pergunta por trás do fit: uma marca B2B pagaria para falar com esse público? De 1 (entretenimento) a 5 (quem decide a compra de software e serviços). Abaixo de 2,5 sai, por melhor que seja o engajamento.</p></div>
+        <div class="card"><b data-en="What I weigh">O que eu peso</b><p data-en="Real expertise over format. Views per subscriber, not subscriber count. A steady publishing rhythm. Any past sponsorship, from any brand: it means they already know how to deliver one.">Especialidade de verdade, mais que formato. Views por inscrito, não número de inscritos. Ritmo constante de publicação. Qualquer publi anterior, de qualquer marca: mostra que já sabem entregar.</p></div>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-pb-call" aria-labelledby="t-pb-call" hidden>
+      <div class="panel-note"><span data-en="Fifteen minutes. The goal is a live profile at the end of the call, not a follow-up email.">Quinze minutos. O objetivo é sair da call com o perfil no ar, não com um e-mail de follow-up.</span></div>
+      <div class="cards">
+        <div class="card"><b data-en="Audience">Público</b><p data-en="Who reads or watches you: roles, seniority, company size? Is it Brazil only, or Latin America too? What do they ask you about most?">Quem lê ou assiste você: cargos, senioridade, porte de empresa? É só Brasil ou também América Latina? O que eles mais te perguntam?</p></div>
+        <div class="card"><b data-en="Sponsorships so far">Publis até aqui</b><p data-en="Which brands have you worked with, and how did they find you? What do you charge per format, and how did you set it? What made a sponsorship go badly?">Com quais marcas você já trabalhou, e como elas te acharam? Quanto cobra por formato, e como chegou nesse preço? O que fez uma publi dar errado?</p></div>
+        <div class="card"><b data-en="Fit with Passionfroot">Fit com a Passionfroot</b><p data-en="Which formats do you want to sell: integration, dedicated video, newsletter slot, LinkedIn post? How many slots a month? Any categories you won’t promote, or exclusivities? We fill in the media kit together before hanging up.">Quais formatos quer vender: integração, vídeo dedicado, espaço na newsletter, post no LinkedIn? Quantas vagas por mês? Alguma categoria que não divulga, ou exclusividade? O media kit é preenchido junto, antes de desligar.</p></div>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-pb-out" aria-labelledby="t-pb-out" hidden>
+      <div class="panel-note"><span data-en="Written as if I worked at Passionfroot. It lives in Apollo as an inactive template with no contacts and no mailbox: it was never sent. Live, it would go out in Portuguese.">Escrito como se eu trabalhasse na Passionfroot. Fica no Apollo como modelo inativo, sem contatos e sem caixa de e-mail: nunca foi enviado. Ao vivo, iria em português.</span></div>
+      <ol class="fc" aria-label="Outreach sequence: day 0 view profile, day 1 connect, day 2 email, day 5 follow-up, day 7 LinkedIn message, day 11 last email, day 13 call; a reply ends the sequence">
+        <li class="fc-node"><b data-en="Day 0 · view the profile, react to a post">Dia 0 · ver o perfil, reagir a um post</b><span class="fc-tool">LinkedIn</span></li>
+        <li class="fc-edge"><span data-en="+1 day">+1 dia</span></li>
+        <li class="fc-node"><b data-en="Day 1 · connection request, no pitch">Dia 1 · pedido de conexão, sem pitch</b><span class="fc-tool">LinkedIn</span></li>
+        <li class="fc-edge"><span data-en="+1 day">+1 dia</span></li>
+        <li class="fc-node"><b data-en="Day 2 · email: brands want their niche">Dia 2 · e-mail: marcas querem o nicho dele</b><small data-en="how the media kit, booking and payment work">como funcionam media kit, reserva e pagamento</small><span class="fc-tool" data-en="Email">E-mail</span></li>
+        <li class="fc-edge"><span data-en="+3 days">+3 dias</span></li>
+        <li class="fc-node"><b data-en="Day 5 · follow-up">Dia 5 · follow-up</b><small data-en="three benefits, offer to draft the profile">três benefícios, oferta de rascunhar o perfil</small><span class="fc-tool" data-en="Email">E-mail</span></li>
+        <li class="fc-edge"><span data-en="+2 days · only if connected">+2 dias · só se conectou</span></li>
+        <li class="fc-node"><b data-en="Day 7 · LinkedIn message">Dia 7 · mensagem no LinkedIn</b><span class="fc-tool">LinkedIn</span></li>
+        <li class="fc-edge"><span data-en="+4 days">+4 dias</span></li>
+        <li class="fc-node"><b data-en="Day 11 · last email">Dia 11 · último e-mail</b><span class="fc-tool" data-en="Email">E-mail</span></li>
+        <li class="fc-edge"><span data-en="+2 days · public business phone only (LGPD)">+2 dias · só telefone comercial público (LGPD)</span></li>
+        <li class="fc-node"><b data-en="Day 13 · call">Dia 13 · call</b><span class="fc-tool" data-en="Phone">Telefone</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node is-decision"><b data-en="A reply at any step?">Resposta em algum passo?</b><small data-en="a reply ends the sequence on its own">a resposta encerra a sequência sozinha</small><span class="fc-tool">Apollo</span></li>
+        <li class="fc-split">
+          <div class="fc-out"><span class="fc-edge" data-en="yes">sim</span><div class="fc-node is-human"><b data-en="Book the onboarding call">Marcar a call de onboarding</b><small>Replied → Call</small><span class="fc-tool">Attio</span></div></div>
+          <div class="fc-out"><span class="fc-edge" data-en="no">não</span><div class="fc-node"><b data-en="Rejected: no reply">Rejected: sem resposta</b><small data-en="back in the queue after 90 days">volta para a fila depois de 90 dias</small><span class="fc-tool">Attio</span></div></div>
+        </li>
       </ol>
       <div class="cards">
-        <div class="card"><b data-en="Cost per approved creator">Custo por aprovado</b><p data-en="About 7 Clay credits, measured in batch 1: 0.5 per enriched profile and about 3.5 to read 3 posts, before any email lookup.">Cerca de 7 créditos da Clay, medido no lote 1: 0,5 por perfil enriquecido e uns 3,5 para ler 3 posts, antes de buscar e-mail.</p></div>
-        <div class="card"><b data-en="Screen before reading posts">Triagem antes dos posts</b><p data-en="Reading posts costs about 7 times as much as the enrichment. Screening the profile first cut 50 profiles down to 13.">Ler posts custa umas 7 vezes o enrich. A triagem pelo perfil cortou 50 perfis para 13.</p></div>
-        <div class="card"><b data-en="One rubric everywhere">Uma rubrica em todo lugar</b><p data-en="Calling Jev from inside Clay keeps LinkedIn on the same rubric as YouTube and newsletters, so the gap map compares like with like.">Chamar o Jev de dentro da Clay mantém o LinkedIn na mesma rubrica do YouTube e das newsletters, e o mapa de gaps compara coisas iguais.</p></div>
+        <div class="card"><b data-en="Personalization">Personalização</b><p data-en="The first line comes from Clay (the creator’s latest post and niche) and the pitch from Attio (their category and the brands buying it). No two emails open the same way.">A primeira linha vem da Clay (o post mais recente e o nicho do creator) e o argumento vem do Attio (a categoria dele e as marcas que compram ela). Nenhum e-mail começa igual.</p></div>
+        <div class="card"><b data-en="Why the call is last">Por que a call é o último passo</b><p data-en="A reply ends the sequence and the creator moves to “Call” in Attio. The call step is the last try, and only with a phone the creator made public or shared (LGPD).">Uma resposta encerra a sequência e o creator vai para “Call” no Attio. O passo de call é a última tentativa, e só com telefone que o creator deixou público ou passou (LGPD).</p></div>
+        <div class="card"><b data-en="No WhatsApp step">Sem passo de WhatsApp</b><p data-en="Apollo has none, and in Brazil it’s where creators answer. I would add it through n8n and the WhatsApp Business API, only after the creator opts in.">O Apollo não tem, e no Brasil é onde os creators respondem. Eu acrescentaria pelo n8n e pela API do WhatsApp Business, só depois do opt-in do creator.</p></div>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-pb-pipe" aria-labelledby="t-pb-pipe" hidden>
+      <div class="panel-note"><span data-en="The stages of the Supply pipeline list in Attio. Every rejection carries a reason, so the funnel explains itself.">Os estágios da lista Supply pipeline no Attio. Toda rejeição tem um motivo, então o funil se explica sozinho.</span></div>
+      <ol class="fc" aria-label="Supply pipeline stages in Attio from Sourced to Campaign-ready; Rejected can happen at any stage and always carries a reason">
+        <li class="fc-node"><b>Sourced</b><small data-en="found; waiting on vetting or a split verdict">encontrado; esperando vetting ou decisão de disputa</small><span class="fc-tool">120</span></li>
+        <li class="fc-edge"><span data-en="both models approve, or I do">os dois modelos aprovam, ou eu aprovo</span></li>
+        <li class="fc-node"><b>Vetted</b><span class="fc-tool">538</span></li>
+        <li class="fc-edge"><span data-en="a contact route (Clay enrich on a paid plan)">um caminho de contato (enrich da Clay num plano pago)</span></li>
+        <li class="fc-node"><b>Ready for outreach</b><span class="fc-tool">2</span></li>
+        <li class="fc-edge"><span data-en="sequence starts">a sequência começa</span></li>
+        <li class="fc-node"><b>Contacted</b></li>
+        <li class="fc-edge"><span data-en="they answer">a pessoa responde</span></li>
+        <li class="fc-node"><b>Replied</b></li>
+        <li class="fc-edge"><span data-en="booked">marcou</span></li>
+        <li class="fc-node is-human"><b>Call</b><small data-en="15-minute onboarding">onboarding de 15 minutos</small><span class="fc-tool" data-en="Me">Eu</span></li>
+        <li class="fc-edge"><span data-en="profile live">perfil no ar</span></li>
+        <li class="fc-node"><b>Signed up</b></li>
+        <li class="fc-edge"><span data-en="media kit and rates set">media kit e preços definidos</span></li>
+        <li class="fc-node"><b>Campaign-ready</b></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node is-off"><b data-en="Rejected · from any stage, always with a reason">Rejected · de qualquer estágio, sempre com motivo</b><span class="fc-tool">1</span></li>
+      </ol>
+      <div class="cards">
+        <div class="card"><b data-en="What I’d report weekly">O que eu reportaria toda semana</b><p data-en="Found → vetted → contacted → replied → signed up, by niche and platform, next to how many briefs each niche received.">Encontrados → aprovados → contatados → responderam → cadastrados, por nicho e plataforma, ao lado de quantos briefs cada nicho recebeu.</p></div>
+        <div class="card"><b data-en="Where I’d source next">Onde eu buscaria a seguir</b><p data-en="Wherever the gap map is thinnest, which is what the weekly workflow does on its own. Today that is health (17 approved creators), against 167 in tech and business.">Onde o mapa de gaps está mais fino, que é o que o workflow semanal faz sozinho. Hoje é saúde (17 creators aprovados), contra 167 em tech e negócios.</p></div>
+        <div class="card"><b data-en="When to try again">Quando tentar de novo</b><p data-en="No reply: back in the queue after 90 days, with a new hook. Rejected for fit: never, unless their content changes.">Sem resposta: volta para a fila depois de 90 dias, com um gancho novo. Reprovado por fit: nunca, a não ser que o conteúdo mude.</p></div>
       </div>
     </div>
   </section>
@@ -648,10 +1018,77 @@ footer{border-top:1px solid var(--line);padding-block:26px;display:flex;justify-
     </div>
     <ul class="checks">
       <li data-en="The ElevenLabs campaign is hypothetical. This is an independent project, not affiliated with Passionfroot or ElevenLabs.">A campanha da ElevenLabs é hipotética. Este é um projeto independente, sem vínculo com a Passionfroot ou a ElevenLabs.</li>
-      <li data-en="No creator was contacted on behalf of Passionfroot or ElevenLabs. Any conversation is in my own name.">Nenhum creator foi contatado em nome da Passionfroot ou da ElevenLabs. Qualquer conversa é no meu nome.</li>
+      <li data-en="No creator was contacted. The outreach sequence is an unsent template, written as if I worked at Passionfroot to show how I would do the job.">Nenhum creator foi contatado. A sequência de outreach é um modelo nunca enviado, escrito como se eu trabalhasse na Passionfroot para mostrar como eu faria o trabalho.</li>
       <li data-en="Only public channel data was used. Emails and phone numbers stay out of this page (Brazil’s LGPD).">Só foram usados dados públicos dos canais. E-mails e telefones ficam fora desta página (LGPD).</li>
       <li data-en="Prices are estimates based on Passionfroot’s pricing guide, not quotes from the creators.">Os preços são estimativas com base no guia de preços da Passionfroot, não cotações dos creators.</li>
     </ul>
+  </section>
+
+  <!-- APÊNDICE -->
+  <section id="apendice">
+    <div class="sec-head">
+      <span class="eyebrow" data-en="Appendix">Apêndice</span>
+    </div>
+    <details class="appendix" id="clay">
+      <summary data-en="Clay: what fit in the free plan, and the flow I would run with credits">Clay: o que coube no plano gratuito, e o fluxo que eu rodaria com créditos</summary>
+      <div class="appendix-body">
+    <div class="sec-head">
+      <span class="eyebrow" data-en="Clay · Free plan">Clay · Plano gratuito</span>
+      <h2 class="display" data-en="What fit in&lt;br&gt;the free plan">O que coube<br>no plano gratuito</h2>
+      <p class="serif" data-en="I built this case without spending money. In Clay, that meant one LinkedIn search and one niche. Below is what I ran, and the flow I would run with credits.">Fiz este case sem gastar dinheiro. Na Clay, isso limitou o LinkedIn a uma busca e a um nicho. Abaixo está o que rodei e o fluxo que eu rodaria com créditos.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-note"><span data-en="What I ran: one batch, end to end. Since “Top Voice” and HR terms dominated the search, 7 of the 10 approved creators are in HR. The other niches were left for a paid plan.">O que rodei: um lote, de ponta a ponta. Como “Top Voice” e os termos de RH dominaram a busca, 7 dos 10 aprovados são de RH. Os outros nichos ficaram para um plano pago.</span></div>
+      <ol class="fc" aria-label="LinkedIn batch run in Clay: people search, profile enrichment, Jev screen, posts for 13 profiles, double vetting, Apollo list">
+        <li class="fc-node"><b data-en="People search">Busca de pessoas</b><small data-en="Brazil, 10k+ followers, creator signals (Top Voice, newsletter), niche terms">Brasil, 10 mil+ seguidores, sinais de creator (Top Voice, newsletter), termos de nicho</small><span class="fc-tool">Clay</span></li>
+        <li class="fc-edge"><span data-en="50 profiles · half the monthly search quota">50 perfis · metade da quota mensal de busca</span></li>
+        <li class="fc-node"><b data-en="Enrich the profile">Enrich do perfil</b><small data-en="headline, about, followers, current roles · 0.5 credit">headline, sobre, seguidores, cargos · 0,5 crédito</small><span class="fc-tool" data-en="Clay workflow">Workflow Clay</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node"><b data-en="Screen by profile only">Triagem só pelo perfil</b><small data-en="who is worth reading posts for">quem vale a leitura dos posts</small><span class="fc-tool">Jev</span></li>
+        <li class="fc-edge"><span data-en="13 of 50">13 de 50</span></li>
+        <li class="fc-node"><b data-en="Latest 3 posts">Últimos 3 posts</b><small data-en="the expensive step · about 3.5 credits">a etapa cara · uns 3,5 créditos</small><span class="fc-tool" data-en="Clay workflow">Workflow Clay</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node"><b data-en="Blind double vetting">Duplo vetting às cegas</b><span class="fc-tool">Jev · Claude</span></li>
+        <li class="fc-edge"><span data-en="10 approved">10 aprovados</span></li>
+        <li class="fc-node"><b data-en="Contact list">Lista de contatos</b><small data-en="emails stay inside Apollo, never on this page">e-mails ficam dentro do Apollo, nunca nesta página</small><span class="fc-tool">Apollo</span></li>
+      </ol>
+    </div>
+    <div class="panel">
+      <div class="panel-note"><span data-en="With credits: the same logic, one search per niche, running every week.">Com créditos: a mesma lógica, uma busca por nicho, rodando toda semana.</span></div>
+      <ol class="fc" aria-label="Clay with credits: one search per niche, import approved creators, enrich, conditional screen, posts, Jev scoring, email waterfall, Attio">
+        <li class="fc-split">
+          <div class="fc-out"><div class="fc-node"><b data-en="One search per niche">Uma busca por nicho</b><small data-en="marketing, product, sales, finance, data, HR, health, legal, founders">marketing, produto, vendas, finanças, dados, RH, saúde, jurídico, founders</small><span class="fc-tool">Clay</span></div></div>
+          <div class="fc-out"><div class="fc-node"><b data-en="Approved YouTube and newsletter creators">Aprovados do YouTube e das newsletters</b><small data-en="find each one's LinkedIn">achar o LinkedIn de cada um</small><span class="fc-tool">Attio → Clay</span></div></div>
+        </li>
+        <li class="fc-edge"></li>
+        <li class="fc-node"><b data-en="Enrich + engagement formula">Enrich + fórmula de engajamento</b><small data-en="reactions per thousand followers">reações por mil seguidores</small><span class="fc-tool">Clay</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node is-decision"><b data-en="Brazil, 5k+ followers?">Brasil, 5 mil+ seguidores?</b><small data-en="the conditional node in the live workflow · no: the run ends, no credits spent">o nó condicional do workflow real · não: a rodada para, sem gastar crédito</small><span class="fc-tool">Clay</span></li>
+        <li class="fc-edge"><span data-en="yes">sim</span></li>
+        <li class="fc-node"><b data-en="Latest posts">Últimos posts</b><span class="fc-tool">Clay</span></li>
+        <li class="fc-edge"></li>
+        <li class="fc-node"><b data-en="Rubric on every row">Rubrica em toda linha</b><small data-en="gates, fit and category through an HTTP API column">portões, fit e categoria por uma coluna de HTTP API</small><span class="fc-tool">Jev</span></li>
+        <li class="fc-edge"><span data-en="approved only">só aprovados</span></li>
+        <li class="fc-node"><b data-en="Email waterfall">Waterfall de e-mail</b><small data-en="kept in Attio, never on a public page">guardado no Attio, nunca em página pública</small><span class="fc-tool">Clay</span></li>
+        <li class="fc-edge"><span data-en="weekly, deduplicated">toda semana, sem repetir</span></li>
+        <li class="fc-node"><b>Vetted</b><span class="fc-tool">Attio</span></li>
+      </ol>
+      <div class="cards">
+        <div class="card"><b data-en="Cost per approved creator">Custo por aprovado</b><p data-en="About 7 Clay credits, measured in batch 1: 0.5 per enriched profile and about 3.5 to read 3 posts, before any email lookup.">Cerca de 7 créditos da Clay, medido no lote 1: 0,5 por perfil enriquecido e uns 3,5 para ler 3 posts, antes de buscar e-mail.</p></div>
+        <div class="card"><b data-en="Screen before reading posts">Triagem antes dos posts</b><p data-en="Reading posts costs about 7 times as much as the enrichment. Screening the profile first cut 50 profiles down to 13.">Ler posts custa umas 7 vezes o enrich. A triagem pelo perfil cortou 50 perfis para 13.</p></div>
+        <div class="card"><b data-en="One rubric everywhere">Uma rubrica em todo lugar</b><p data-en="Calling Jev from inside Clay keeps LinkedIn on the same rubric as YouTube and newsletters, so the gap map compares like with like.">Chamar o Jev de dentro da Clay mantém o LinkedIn na mesma rubrica do YouTube e das newsletters, e o mapa de gaps compara coisas iguais.</p></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-note"><span data-en="Actions from Clay’s catalog I would add next. I checked them through the CLI; I didn’t run them, since the free plan doesn’t show what they cost.">Ações do catálogo da Clay que eu acrescentaria. Conferi pela CLI; não rodei, porque o plano gratuito não mostra quanto custam.</span></div>
+      <div class="cards">
+        <div class="card"><b data-en="Who already sponsors them">Quem já patrocina</b><p data-en="Upriver lists the brands sponsoring a YouTube channel or newsletter. A creator who has already done B2B sponsorships is the warmest lead there is.">A Upriver lista as marcas que patrocinam um canal do YouTube ou uma newsletter. Creator que já fez publi B2B é o lead mais quente que existe.</p></div>
+        <div class="card"><b data-en="Who the client’s competitors pay">Quem os concorrentes pagam</b><p data-en="Adbeat shows which YouTube channels a company advertises on. Run it on a client’s competitors and you get creators already proven with that audience.">A Adbeat mostra em quais canais do YouTube uma empresa anuncia. Rodando nos concorrentes do cliente, saem creators já testados com aquele público.</p></div>
+        <div class="card"><b data-en="Instagram and TikTok">Instagram e TikTok</b><p data-en="Modash covers profiles, feeds and post metrics, plus creator email lookup. Its search returns 5 accounts at a time, so it suits checking a creator found elsewhere, not discovery.">A Modash cobre perfil, feed e métricas de post, além de achar o e-mail do creator. A busca traz 5 contas por vez: serve para checar um creator achado em outro lugar, não para descobrir.</p></div>
+      </div>
+    </div>
+      </div>
+    </details>
   </section>
 
   <footer>
