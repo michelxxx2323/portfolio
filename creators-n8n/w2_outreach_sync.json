@@ -118,7 +118,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({\n  first_name: $json.data.values.name[0].first_name || $json.data.values.name[0].full_name.split(\" \")[0],\n  last_name: $json.data.values.name[0].last_name || $json.data.values.name[0].full_name.split(\" \").slice(1).join(\" \"),\n  linkedin_url: $json.data.values.linkedin?.[0]?.value,\n  label_names: [\"Creator Supply\"],\n  run_dedupe: true,\n}) }}",
+        "jsonBody": "={{ JSON.stringify({\n  first_name: $json.data.values.name[0].first_name || $json.data.values.name[0].full_name.split(\" \")[0],\n  last_name: $json.data.values.name[0].last_name || $json.data.values.name[0].full_name.split(\" \").slice(1).join(\" \"),\n  linkedin_url: $json.data.values.linkedin?.[0]?.value,\n  email: $json.data.values.email_addresses?.[0]?.email_address,\n  label_names: [\"Creator Supply\"],\n  run_dedupe: true,\n}) }}",
         "options": {}
       },
       "credentials": {
@@ -138,12 +138,12 @@
       ],
       "parameters": {
         "method": "POST",
-        "url": "https://api.apollo.io/api/v1/emailer_campaigns/6adab99f223bd400148be33c/add_contact_ids",
+        "url": "=https://api.apollo.io/api/v1/emailer_campaigns/{{ ({\"YouTube\":\"6adb83c59b95b90010290549\",\"Newsletter\":\"6adb83c69b95b90010290565\",\"LinkedIn\":\"6adb83c8d6d1450021c6aba9\"})[$('Attio · get creator').item.json.data.values.platform[0].option.title] }}/add_contact_ids",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({\n  emailer_campaign_id: \"6adab99f223bd400148be33c\",\n  contact_ids: [$json.contact.id],\n  send_email_from_email_account_id: \"DEMO_ONLY_NO_MAILBOX_CONNECTED\",\n}) }}",
+        "jsonBody": "={{ JSON.stringify({\n  emailer_campaign_id: ({\"YouTube\":\"6adb83c59b95b90010290549\",\"Newsletter\":\"6adb83c69b95b90010290565\",\"LinkedIn\":\"6adb83c8d6d1450021c6aba9\"})[$('Attio · get creator').item.json.data.values.platform[0].option.title],\n  contact_ids: [$json.contact.id],\n  send_email_from_email_account_id: \"DEMO_ONLY_NO_MAILBOX_CONNECTED\",\n}) }}",
         "options": {}
       },
       "credentials": {
